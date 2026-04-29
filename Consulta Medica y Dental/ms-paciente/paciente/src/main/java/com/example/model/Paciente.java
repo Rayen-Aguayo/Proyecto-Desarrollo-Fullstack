@@ -1,4 +1,4 @@
-package com.example.ms_paciente.model;
+package com.example.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

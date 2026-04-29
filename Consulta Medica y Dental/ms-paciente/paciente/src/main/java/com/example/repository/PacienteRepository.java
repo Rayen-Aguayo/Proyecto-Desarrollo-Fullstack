@@ -1,8 +1,8 @@
-package com.example.ms_paciente.repository;
+package com.example.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.ms_paciente.model.Paciente;
+import com.example.model.Paciente;
 
 public interface PacienteRepository extends JpaRepository<Paciente, String> {
 

@@ -1,4 +1,4 @@
-package com.example.ms_medico.model;
+package com.example.Medico.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

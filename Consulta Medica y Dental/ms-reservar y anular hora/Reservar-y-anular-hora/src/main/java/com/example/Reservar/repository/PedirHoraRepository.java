@@ -1,8 +1,8 @@
-package com.example.ms_pedir_hora.repository;
+package com.example.Reservar.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.ms_pedir_hora.model.PedirHora;
+import com.example.Reservar.model.PedirHora;
 
 public interface PedirHoraRepository extends JpaRepository<PedirHora, Long>  {
 

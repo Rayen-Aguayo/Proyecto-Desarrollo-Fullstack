@@ -1,4 +1,4 @@
-package com.example.ms_paciente.controller;
+package com.example.controller;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ms_paciente.model.Paciente;
-import com.example.ms_paciente.service.PacienteService;
+import com.example.model.Paciente;
+import com.example.service.PacienteService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

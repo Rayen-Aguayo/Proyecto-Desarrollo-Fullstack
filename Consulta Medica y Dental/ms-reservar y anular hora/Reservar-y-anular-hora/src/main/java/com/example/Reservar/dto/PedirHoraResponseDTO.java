@@ -1,4 +1,4 @@
-package com.example.ms_pedir_hora.dto;
+package com.example.Reservar.dto;
 
 import java.util.Date;
 
