@@ -1,5 +1,7 @@
 package com.example.model;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -17,10 +19,9 @@ public class Paciente {
     private String run;
 
     private String datosDelPaciente;
-    private Integer fechaNacimiento;
+    private Date fechaNacimiento;
     private String alergias;
     private String enfermedad;
-    private Boolean tomaMedicamento;
-    private String cualMedicameto;
+    private String queMedicamentoEstaTomando;
     private Integer nroTelefono;
 }
