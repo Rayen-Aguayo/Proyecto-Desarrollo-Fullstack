@@ -1,8 +1,8 @@
-package com.example.ms_medico.repository;
+package com.example.Medico.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.ms_medico.model.Medico;
+import com.example.Medico.model.Medico;
 
 public interface MedicoRepository extends JpaRepository<Medico, String>{
 
