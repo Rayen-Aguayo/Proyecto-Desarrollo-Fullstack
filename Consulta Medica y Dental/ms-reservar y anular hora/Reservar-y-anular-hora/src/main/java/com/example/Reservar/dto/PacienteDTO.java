@@ -10,13 +10,16 @@ import lombok.NoArgsConstructor;
 public class PacienteDTO {
 
     private String run;
-    
+
+    private String nombrePaciente;
+
     private String datosDelPaciente;
-    private Integer fechaNacimiento;
+
+    private Integer edad;
+
     private String alergias;
     private String enfermedad;
-    private Boolean tomaMedicamento;
-    private String cualMedicameto;
-    private Integer nroTelefono;
+    private String queMedicamentoEstaTomando;
 
+    private Integer nroTelefono;
 }

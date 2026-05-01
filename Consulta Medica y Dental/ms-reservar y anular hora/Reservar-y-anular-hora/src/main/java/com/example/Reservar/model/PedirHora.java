@@ -24,9 +24,9 @@ public class PedirHora {
     private Integer id;
     
     private Date fecha;
-    private Integer horaDeAtención;
-    private Integer nroPaciente;
+    private Integer horaDeAtención;  
     private String rutPaciente;
+    private String nombrePaciente;
     private String nombreMédico;
     private String atencion;
 

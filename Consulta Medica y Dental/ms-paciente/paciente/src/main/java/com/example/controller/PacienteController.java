@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.model.Paciente;
 import com.example.service.PacienteService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +38,7 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Paciente> guardar(@RequestBody Paciente paciente) {
+    public ResponseEntity<Paciente> guardar(@Valid @RequestBody Paciente paciente) {
         Paciente pacienteNuevo = pacienteService.save(paciente);
         return ResponseEntity.status(HttpStatus.CREATED).body(pacienteNuevo); 
     }
@@ -52,16 +54,15 @@ public class PacienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Paciente> actualizar(@PathVariable String id, @RequestBody Paciente paciente) {
+    public ResponseEntity<Paciente> actualizar(@PathVariable String id, @Valid @RequestBody Paciente paciente) {
         try{
             Paciente pac = pacienteService.findById(id);
             pac.setAlergias(paciente.getAlergias());
-            pac.setCualMedicameto(paciente.getCualMedicameto());
             pac.setDatosDelPaciente(paciente.getDatosDelPaciente());
             pac.setEnfermedad(paciente.getEnfermedad());
-            pac.setFechaNacimiento(paciente.getFechaNacimiento());
+            pac.setEdad(paciente.getEdad());
             pac.setNroTelefono(paciente.getNroTelefono());
-            pac.setTomaMedicamento(paciente.getTomaMedicamento());
+            pac.setQueMedicamentoEstaTomando(paciente.getQueMedicamentoEstaTomando());
             pacienteService.save(pac);
             return ResponseEntity.ok(paciente);
         }catch(Exception e){

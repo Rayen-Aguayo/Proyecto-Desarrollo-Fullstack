@@ -15,6 +15,7 @@ public class PedirHoraResponseDTO {
     
     private Date fecha;
     private Integer horaDeAtención;
+    
     private PacienteDTO nroPaciente;
     private PacienteDTO rutPaciente;
     private MedicoDTO nombreMédico;
