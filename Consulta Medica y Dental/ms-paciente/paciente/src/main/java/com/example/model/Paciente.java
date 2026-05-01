@@ -5,6 +5,9 @@ import java.sql.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,12 +19,21 @@ import lombok.NoArgsConstructor;
 @Table(name = "paciente")
 public class Paciente {
     @Id
+    @NotBlank(message = "el run no puede estar vacio")
     private String run;
 
+    @NotBlank(message = "el run no puede estar vacio")
     private String datosDelPaciente;
+
+    @NotBlank(message = "la fecha de naciminento no puede estar vacio")
+    @NotNull(message = "la fecha de nacimiento no puede estar vacio")
     private Date fechaNacimiento;
+
     private String alergias;
-    private String enfermedad;
+    private Long enfermedad;
     private String queMedicamentoEstaTomando;
-    private Integer nroTelefono;
+
+    @NotNull(message = "el nro de Telefono no puede estar vacio")
+    @Size(min = 9, max = 9, message = "El teléfono debe tener 9 digitos")
+    private Long nroTelefono;
 }
