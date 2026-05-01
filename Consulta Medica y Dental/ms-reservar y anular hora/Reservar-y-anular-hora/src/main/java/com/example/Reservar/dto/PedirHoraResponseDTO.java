@@ -21,11 +21,11 @@ public class PedirHoraResponseDTO {
     @NotNull(message = "la hora de atencion no puede estar vacio")
     private Integer horaDeAtención;  
     @NotBlank(message = "el run del paciente no puede estar vacio")
-    private String rutPaciente;
+    private PacienteDTO rutPaciente;
     @NotBlank(message = "el nombre del paciente no puede estar vacio")
-    private String nombrePaciente;
+    private PacienteDTO nombrePaciente;
     @NotBlank(message = "el nombre del medico no puede estar vacio")
-    private String nombreMédico;
+    private MedicoDTO nombreMdico;
     @NotBlank(message = "la atencion que va a recibir el paciente no puede estar vacio")
     private String atencion;
 }

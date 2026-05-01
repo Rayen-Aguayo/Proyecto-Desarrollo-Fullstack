@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MedicoDTO {
+    
     private String run;
-
+    private String nombre;
     private Integer edad;
     private Integer telefono;
     private String especialidad;
