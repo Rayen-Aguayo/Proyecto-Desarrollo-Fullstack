@@ -21,11 +21,11 @@ import lombok.NoArgsConstructor;
 public class PedirHora {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     
     private Date fecha;
     private Integer horaDeAtención;  
-    private String rutPaciente;
+    private String runPaciente;
     private String nombrePaciente;
     private String nombreMédico;
     private String atencion;
