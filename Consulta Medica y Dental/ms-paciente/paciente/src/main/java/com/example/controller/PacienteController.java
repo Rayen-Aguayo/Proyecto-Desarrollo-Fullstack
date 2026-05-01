@@ -60,7 +60,7 @@ public class PacienteController {
             pac.setAlergias(paciente.getAlergias());
             pac.setDatosDelPaciente(paciente.getDatosDelPaciente());
             pac.setEnfermedad(paciente.getEnfermedad());
-            pac.setFechaNacimiento(paciente.getFechaNacimiento());
+            pac.setEdad(paciente.getEdad());
             pac.setNroTelefono(paciente.getNroTelefono());
             pac.setQueMedicamentoEstaTomando(paciente.getQueMedicamentoEstaTomando());
             pacienteService.save(pac);

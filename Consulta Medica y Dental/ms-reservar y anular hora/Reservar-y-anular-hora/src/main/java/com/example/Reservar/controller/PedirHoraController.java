@@ -1,4 +1,4 @@
-package com.example.ms_pedir_hora.controller;
+package com.example.Reservar.controller;
 
 public class PedirHoraController {
 
