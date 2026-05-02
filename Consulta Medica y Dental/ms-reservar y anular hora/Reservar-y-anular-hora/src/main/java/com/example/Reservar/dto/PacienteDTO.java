@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PacienteDTO {
 
-    private String run;
+    private String runPaciente;
 
     private String nombrePaciente;
 
@@ -22,5 +22,5 @@ public class PacienteDTO {
     private String enfermedad;
     private String queMedicamentoEstaTomando;
 
-    private Integer nroTelefono;
+    private Integer nroTelefonoPaciente;
 }

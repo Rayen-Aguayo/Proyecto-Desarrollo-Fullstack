@@ -25,7 +25,7 @@ public class Paciente {
     @NotBlank(message = "el nombre no puede estar vacio")
     private String nombrePaciente;
 
-    @NotBlank(message = "el run no puede estar vacio")
+    @NotBlank(message = "los datos del paciente no pueden esta vacios")
     private String datosDelPaciente;
 
     @NotNull(message = "la fecha de nacimiento no puede estar vacio")

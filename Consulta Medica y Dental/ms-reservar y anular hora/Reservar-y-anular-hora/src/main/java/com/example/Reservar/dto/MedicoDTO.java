@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MedicoDTO {
     
-    private String run;
-    private String nombre;
-    private Integer edad;
-    private Integer telefono;
+    private String runMeico;
+    private String nombreMedico;
+    private Integer edadMedico;
+    private Integer telefonoMedico;
     private String especialidad;
 }

@@ -14,8 +14,6 @@ import com.example.Reservar.dto.PedirHoraResponseDTO;
 import com.example.Reservar.model.PedirHora;
 import com.example.Reservar.repository.PedirHoraRepository;
 
-import jakarta.validation.constraints.NotBlank;
-
 @Service
 public class PedirHoraService {
     @Autowired
@@ -29,22 +27,20 @@ public class PedirHoraService {
     public List<PedirHoraResponseDTO> getAll(){
     List<PedirHoraResponseDTO> lista = new ArrayList<>();
 
- 
-    private PacienteDTO rutPaciente;
-    private PacienteDTO nombrePaciente;
-    private MedicoDTO nombreMdico;
-    private String atencion;
     for(PedirHora p: pedirHoraRepository.findAll()){
         PedirHoraResponseDTO pedirHora = new PedirHoraResponseDTO();
+        PacienteDTO pacienterun = getPacienteDTO(p.getRunPaciente());
+        pedirHora.setRutPaciente(pacienterun);
+        PacienteDTO nombrPaciente = getPacienteDTO(p.getNombrePaciente());
+        pedirHora.setNombrePaciente(nombrPaciente);
+        MedicoDTO nombrMedico = getMedicoDTO(p.getNombreMédico());
         pedirHora.setId(p.getId());
         pedirHora.setFecha(p.getFecha());
         pedirHora.setHoraDeAtención(p.getHoraDeAtención());
-        PacienteDTO paciente = get
-        AutorDTO autor = getAutor(l.getId_autor());
-        libro.setAutor(autor);
-        lista.add(libro);
+        pedirHora.setNombreMdico(nombrMedico);
+        pedirHora.setAtencion(p.getAtencion());
 
-
+        lista.add(pedirHora);
 
     }
     return lista;
@@ -57,4 +53,11 @@ public class PedirHoraService {
         .block();
     }
     
+    private MedicoDTO getMedicoDTO(String run){
+        return webClient().get()
+        .uri("http://localhost:8080/api/v1/medicos/" + run)
+        .retrieve()
+        .bodyToMono(MedicoDTO.class)
+        .block();
+    }
 }
