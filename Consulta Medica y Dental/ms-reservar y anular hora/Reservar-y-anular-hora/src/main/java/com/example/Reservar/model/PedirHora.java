@@ -23,11 +23,12 @@ public class PedirHora {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private Date fecha;
-    private Integer horaDeAtención;  
     private String runPaciente;
     private String nombrePaciente;
     private String nombreMédico;
+    private Date fecha;
+    private Integer horaDeAtención;  
+
     private String atencion;
 
 }

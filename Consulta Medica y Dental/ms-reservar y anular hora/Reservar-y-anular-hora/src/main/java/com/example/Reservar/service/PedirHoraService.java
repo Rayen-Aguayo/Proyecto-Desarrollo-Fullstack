@@ -29,15 +29,16 @@ public class PedirHoraService {
 
     for(PedirHora p: pedirHoraRepository.findAll()){
         PedirHoraResponseDTO pedirHora = new PedirHoraResponseDTO();
+        
+        pedirHora.setId(p.getId());
         PacienteDTO pacienterun = getPacienteDTO(p.getRunPaciente());
         pedirHora.setRutPaciente(pacienterun);
         PacienteDTO nombrPaciente = getPacienteDTO(p.getNombrePaciente());
         pedirHora.setNombrePaciente(nombrPaciente);
         MedicoDTO nombrMedico = getMedicoDTO(p.getNombreMédico());
-        pedirHora.setId(p.getId());
+        pedirHora.setNombreMdico(nombrMedico);
         pedirHora.setFecha(p.getFecha());
         pedirHora.setHoraDeAtención(p.getHoraDeAtención());
-        pedirHora.setNombreMdico(nombrMedico);
         pedirHora.setAtencion(p.getAtencion());
 
         lista.add(pedirHora);
@@ -59,5 +60,23 @@ public class PedirHoraService {
         .retrieve()
         .bodyToMono(MedicoDTO.class)
         .block();
+    }
+
+    public List<PedirHora> findAll(){
+        return pedirHoraRepository.findAll();
+    }
+
+    public PedirHora findById (Integer id){
+        
+        return pedirHoraRepository.findById(id).orElse(null);
+    }
+
+    public PedirHora save (PedirHora pedirHora){
+        return pedirHoraRepository.save(pedirHora);
+    }
+
+    public void delete(Integer id){
+        pedirHoraRepository.deleteById(id);
+
     }
 }
