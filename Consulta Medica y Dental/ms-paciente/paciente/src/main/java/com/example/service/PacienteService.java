@@ -33,29 +33,34 @@ public class PacienteService {
     }
 
     public List<Paciente> listar() {
-        log.info("Listar autores");
+        log.info("Listar pacientes");
         return pacienteRepository.findAll();
     }
 
     public Paciente obtener(String id) {
-        log.info("Obtener autor", keyValue("id", id));
+        log.info("Obtener paciente", keyValue("run", id));
 
         return pacienteRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Autor no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("paciente no encontrado"));
     }
 
     public Paciente actualizar(String id, PacienteDTO dto) {
         log.info("Actualizar autor", keyValue("id", id));
 
-        Paciente a = obtener(id);
-        a.setNombre(dto.getNombre());
-        a.setAnio(dto.getAnio());
+        Paciente p = obtener(id);
+        p.setNombrePaciente(dto.getNombrePaciente()); 
+        p.setDatosDelPaciente(dto.getDatosDelPaciente());
+        p.setEdad(dto.getEdad());
+        p.setAlergias(dto.getAlergias()); 
+        p.setEnfermedad(dto.getEnfermedad());
+        p.setQueMedicamentoEstaTomando(dto.getQueMedicamentoEstaTomando());        
+        p.setNroTelefono(dto.getNroTelefono());
 
-        return pacienteRepository.save(a);
+        return pacienteRepository.save(p);
     }
 
     public void eliminar(String id) {
-        log.warn("Eliminar autor", keyValue("id", id));
+        log.warn("Eliminar paciente", keyValue("run", id));
         pacienteRepository.deleteById(id);
     }
 }
