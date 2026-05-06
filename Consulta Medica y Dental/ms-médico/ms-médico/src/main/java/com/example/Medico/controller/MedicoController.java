@@ -2,15 +2,16 @@ package com.example.Medico.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Medico.model.Medico;
 import com.example.Medico.service.MedicoService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,17 +22,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
-
-
-
-
-
 @RestController
 @RequestMapping("api/v1/medicos")
+@RequiredArgsConstructor
 public class MedicoController {
-    @Autowired
-    private MedicoService medicoService;
+    
+    private final MedicoService service;
 
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<Medico>> crear(@Valid @RequestBody MedicoDTO dto )
+    
     @GetMapping
     public ResponseEntity<List<Medico>> listarMedico() {
         List<Medico> medicos = medicoService.findAll();

@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 public class Medico {
     @Id
     private String run;
-    private String nombre;
+    private String nombreMedico;
     private Integer edad;
-    private Integer telefono;
+    private Integer nrotelefono;
     private String especialidad;
 }
