@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PedirHoraResponseDTO {
+public class PedirHoraDTO {
 
     @NotNull(message = "el id no puede estar vacio")
     private Long id;
@@ -21,11 +21,11 @@ public class PedirHoraResponseDTO {
     @NotNull(message = "la hora de atencion no puede estar vacio")
     private Integer horaDeAtención;  
     @NotBlank(message = "el run del paciente no puede estar vacio")
-    private PacienteDTO rutPaciente;
+    private String rutPaciente;
     @NotBlank(message = "el nombre del paciente no puede estar vacio")
-    private PacienteDTO nombrePaciente;
+    private String nombrePaciente;
     @NotBlank(message = "el nombre del medico no puede estar vacio")
-    private MedicoDTO nombreMdico;
+    private String nombreMdico;
     @NotBlank(message = "la atencion que va a recibir el paciente no puede estar vacio")
     private String atencion;
 }

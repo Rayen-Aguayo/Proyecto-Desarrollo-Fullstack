@@ -14,6 +14,7 @@ import com.example.model.Paciente;
 import com.example.service.PacienteService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api/v1/pacientes")
+@RequiredArgsConstructor
 public class PacienteController {
     @Autowired
     private PacienteService pacienteService;
@@ -34,13 +36,13 @@ public class PacienteController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Paciente>> crear(@Valid @RequestBody PacienteDTO dto) {
 
-        Paciente autor = pacienteService.crear(dto);
+        Paciente paciente = pacienteService.crear(dto);
 
         return ResponseEntity.status(201).body(
                 ApiResponse.<Paciente>builder()
                         .success(true)
                         .message("Autor creado")
-                        .data(autor)
+                        .data(paciente)
                         .build()
         );
     }

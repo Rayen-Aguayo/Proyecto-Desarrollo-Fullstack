@@ -25,11 +25,11 @@ public class PacienteService {
     public Paciente crear(PacienteDTO dto) {
         log.info("Crear paciente", keyValue("nombre", dto.getNombrePaciente()));
 
-        Paciente a = new Paciente(dto.getRun(), dto.getNombrePaciente(), 
+        Paciente p = new Paciente(dto.getRun(), dto.getNombrePaciente(), 
         dto.getDatosDelPaciente(), dto.getEdad(), dto.getAlergias(), 
         dto.getEnfermedad(), dto.getQueMedicamentoEstaTomando(), dto.getNroTelefono());
  
-        return pacienteRepository.save(a);
+        return pacienteRepository.save(p);
     }
 
     public List<Paciente> listar() {

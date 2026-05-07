@@ -10,9 +10,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.example.Reservar.dto.MedicoDTO;
 import com.example.Reservar.dto.PacienteDTO;
-import com.example.Reservar.dto.PedirHoraResponseDTO;
+import com.example.Reservar.dto.PedirHoraDTO;
 import com.example.Reservar.model.PedirHora;
 import com.example.Reservar.repository.PedirHoraRepository;
+import static net.logstash.logback.argument.StructuredArguments.keyValue;
+
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class PedirHoraService {
@@ -24,11 +28,11 @@ public class PedirHoraService {
         return WebClient.builder().build();
     }
 
-    public List<PedirHoraResponseDTO> getAll(){
-    List<PedirHoraResponseDTO> lista = new ArrayList<>();
+    public List<PedirHoraDTO> getAll(){
+    List<PedirHoraDTO> lista = new ArrayList<>();
 
     for(PedirHora p: pedirHoraRepository.findAll()){
-        PedirHoraResponseDTO pedirHora = new PedirHoraResponseDTO();
+        PedirHoraDTO pedirHora = new PedirHoraDTO();
         
         pedirHora.setId(p.getId());
         PacienteDTO pacienterun = getPacienteDTO(p.getRunPaciente());
@@ -62,21 +66,46 @@ public class PedirHoraService {
         .block();
     }
 
-    public List<PedirHora> findAll(){
+        public PedirHoraDTO crear(PacienteDTO dto) {
+        log.info("agregar reserva de hora", keyValue("nombre", dto.getNombrePaciente()));
+
+        PedirHora p = new PedirHora(null, dto.getRunPaciente(), dto.getNombrePaciente(),
+    dto.get);
+        return pedirHoraRepository.save(p);
+    }
+
+    private String nombreMédico;
+    private Date fecha;
+    private Integer horaDeAtención;  
+
+    private String atencion;
+
+
+    public List<PedirHora> listar() {
+        log.info("Listar autores");
         return pedirHoraRepository.findAll();
     }
 
-    public PedirHora findById (Integer id){
-        
-        return pedirHoraRepository.findById(id).orElse(null);
+    public PedirHora obtener(Long id) {
+        log.info("Obtener autor", keyValue("id", id));
+
+        return pedirHoraRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Autor no encontrado"));
     }
 
-    public PedirHora save (PedirHora pedirHora){
-        return pedirHoraRepository.save(pedirHora);
+    public PedirHora actualizar(Long id, PacienteDTO dto) {
+        log.info("Actualizar autor", keyValue("id", id));
+
+        PedirHora p = obtener(id);
+        a.setNombre(dto.getNombrePaciente());
+        a.setAnio(dto.getAnio());
+
+        return pedirHoraRepository.save(a);
     }
 
-    public void delete(Integer id){
+    public void eliminar(Long id) {
+        log.warn("Eliminar autor", keyValue("id", id));
         pedirHoraRepository.deleteById(id);
-
     }
 }
+
