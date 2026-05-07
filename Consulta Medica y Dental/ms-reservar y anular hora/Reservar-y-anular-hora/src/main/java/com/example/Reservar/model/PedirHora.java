@@ -25,7 +25,7 @@ public class PedirHora {
     
     private String runPaciente;
     private String nombrePaciente;
-    private String nombreMédico;
+    private String nombreMedico;
     private Date fecha;
     private Integer horaDeAtención;  
 

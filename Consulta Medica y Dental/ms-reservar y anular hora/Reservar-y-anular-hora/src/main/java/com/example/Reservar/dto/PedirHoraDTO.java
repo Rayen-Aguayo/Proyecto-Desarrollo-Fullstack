@@ -26,7 +26,7 @@ public class PedirHoraDTO {
     @NotBlank(message = "el nombre del paciente no puede estar vacio")
     private String nombrePaciente;
     @NotBlank(message = "el nombre del medico no puede estar vacio")
-    private String nombreMdico;
+    private String nombreMedico;
     @NotBlank(message = "la atencion que va a recibir el paciente no puede estar vacio")
     private String atencion;
 }
