@@ -5,12 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Medico.dto.ApiResponse;
+import com.example.Medico.dto.MedicoDTO;
 import com.example.Medico.model.Medico;
 import com.example.Medico.service.MedicoService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,67 +23,86 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-
-
-
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 
 @RestController
 @RequestMapping("api/v1/medicos")
+@RequiredArgsConstructor
 public class MedicoController {
-    @Autowired
-    private MedicoService medicoService;
+    
 
-    @GetMapping
-    public ResponseEntity<List<Medico>> listarMedico() {
-        List<Medico> medicos = medicoService.findAll();
-        if(medicos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(medicos);
-    }
+    private final MedicoService service;
 
     @PostMapping
-    public ResponseEntity<Medico> guardar(@Valid @RequestBody Medico medico) {
-        Medico medicoNuevo = medicoService.save(medico);
-        return ResponseEntity.status(HttpStatus.CREATED).body(medicoNuevo);
-    }
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<Medico>> crear(@Valid @RequestBody MedicoDTO dto) {
 
-    @GetMapping("/id")
-    public ResponseEntity<Medico> buscar(@PathVariable String id) {
-        try {
-            Medico medico = medicoService.findById(id);
-            return ResponseEntity.ok(medico);
-        } catch(Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        Medico medico = service.crear(dto);
+
+        return ResponseEntity.status(201).body(
+             ((Object) ApiResponse.<Medico>builder())
+                     .success(success:true)
+                     .message(message:"Medico creado")
+                     .data(medico)
+                     .build()
+        );
     }
     
+    @GetMapping
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public ResponseEntity<ApiResponse<List<Medico>>> listar() {
+
+        return ResponseEntity.ok(
+                ApiResponse.<List<Medico>>builder()
+                        .success(true)
+                        .message("Listado obtenido")
+                        .data(medicoService.listar())
+                        .build()
+        );
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<ApiResponse<Medico>> obtener(@PathVariable String id) {
+
+        return ResponseEntity.ok(
+                ApiResponse.<Medico>builder()
+                        .success(true)
+                        .message("Medico obtenido")
+                        .data(medicoService.obtener(id))
+                        .build()
+        );
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Medico> actualizar(@PathVariable String id, @Valid @RequestBody Medico medico) {
-        try {
-            Medico med = medicoService.findById(id);
-            med.setNombre(id);
-            med.setRun(medico.getRun());
-            med.setEdad(medico.getEdad());
-            med.setTelefono(medico.getTelefono());
-            med.setEspecialidad(medico.getEspecialidad());
-            medicoService.save(med);
-            return ResponseEntity.ok(medico);
-        } catch(Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<Medico>> actualizar(@PathVariable String id, @Valid @RequestBody MedicoDTO dto) {
+
+        Medico medico = medicoService.actualizar(id, dto);
+
+        return ResponseEntity.ok(
+                ApiResponse.<Medico>builder()
+                        .success(true)
+                        .message("Medico actualizado")
+                        .data(medico)
+                        .build()
+        );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable String id) {
-        try {
-            medicoService.delete(id);
-            return ResponseEntity.noContent().build();
-        } catch(Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable String id) {
+
+        medicoService.eliminar(id);
+
+        return ResponseEntity.ok(
+                ApiResponse.<Void>builder()
+                        .success(true)
+                        .message("Autor eliminado")
+                        .build()
+        );
     }
+}
 }
