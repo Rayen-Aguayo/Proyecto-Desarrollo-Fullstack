@@ -16,6 +16,7 @@ public class PedirHoraDTO {
     @NotNull(message = "el id no puede estar vacio")
     private Long id;
     
+    @NotNull(message = "la fecha no puede estar vacia")
     private Date fecha;
 
     @NotNull(message = "la hora de atencion no puede estar vacio")

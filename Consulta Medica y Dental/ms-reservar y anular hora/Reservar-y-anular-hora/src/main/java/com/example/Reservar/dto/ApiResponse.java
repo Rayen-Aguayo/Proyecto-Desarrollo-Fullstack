@@ -1,4 +1,4 @@
-package com.example.ms_libro.dto;
+package com.example.Reservar.dto;
 
 import lombok.*;
 
