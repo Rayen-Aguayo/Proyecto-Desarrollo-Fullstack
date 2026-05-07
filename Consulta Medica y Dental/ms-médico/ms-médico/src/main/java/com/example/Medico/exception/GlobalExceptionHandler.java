@@ -1,9 +1,9 @@
-package com.example.ms_libro.exception;
-
-import com.example.ms_libro.dto.ApiResponse;
+package com.example.Medico.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.Medico.dto.ApiResponse;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import java.util.*;
