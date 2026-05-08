@@ -1,6 +1,5 @@
 package com.example.Reservar.client;
 
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -16,7 +15,7 @@ public class PacienteClient {
     private final WebClient webClient;
     private final String BASE_URL = "http://localhost:8080/api/v1/pacientes/";
     
-    public PacienteDTO getPacienteClient(Long run, String token){
+    public PacienteDTO getPacienteClient(String run, String token){
     
     ApiResponse<PacienteDTO> response = webClient.get()
                 .uri(BASE_URL + run)

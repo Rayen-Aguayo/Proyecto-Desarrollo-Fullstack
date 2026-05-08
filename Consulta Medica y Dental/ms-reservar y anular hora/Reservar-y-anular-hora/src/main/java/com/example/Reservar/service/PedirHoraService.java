@@ -69,7 +69,7 @@ public class PedirHoraService {
 
     public PedirHoraResponse actualizar(Long id, PedirHoraDTO dto, String token) {
 
-        var pedirHora = pacienteClient.getPacienteClient(dto.getId(), token);
+        var pedirHora = pacienteClient.getPacienteClient(dto.getRutPaciente(), token);
 
         if (pedirHora == null) {
             throw new RuntimeException("la reserva de hora no existe");
@@ -94,13 +94,19 @@ public class PedirHoraService {
 
     private PedirHoraResponse mapToResponse(PedirHora pedirHora, String token) {
 
-        var pedirHora1 = pacienteClient.getPacienteClient(pedirHora.getId(), token);
+        var pacienteRun = pacienteClient.getPacienteClient(pedirHora.getRunPaciente(), token);
+        var pacienteNom = pacienteClient.getPacienteClient(pedirHora.getNombrePaciente(), token);
+        var medico = medicoClient.getMedicoClient(pedirHora.getNombreMedico(), token);
 
         return PedirHoraResponse.builder()
                 .id(pedirHora.getId())
-                .titulo(pedirHora.getTitulo())
-                .anio(pedirHora.getAnio())
-                .autor(pedirHora)
+                .runPaciente(pacienteRun)
+                .nombrePaciente(pacienteNom)
+                .nombreMédico(medico)
+                .fecha(pedirHora.getFecha())
+                .horaDeAtención(pedirHora.getHoraDeAtención())  
+                .atencion(pedirHora.getAtencion())
+
                 .build();
     }
 }
