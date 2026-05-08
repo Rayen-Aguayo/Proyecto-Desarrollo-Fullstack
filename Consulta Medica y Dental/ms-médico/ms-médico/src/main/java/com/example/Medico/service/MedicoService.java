@@ -10,6 +10,7 @@ import com.example.Medico.dto.MedicoDTO;
 import com.example.Medico.model.Medico;
 import com.example.Medico.repository.MedicoRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +25,38 @@ public class MedicoService {
         log.info("Crear medico", keyValue("nombre", dto.getNombreMedico()));
 
         Medico m = new Medico(dto.getRun(), dto.getNombreMedico(),
-        dto.get)
+        dto.getEspecialidad(), dto.getFirmaMedico(), dto.getEdad(), dto.getNroTelefono());
+
+        return repo.save(m);
+    }
+
+    public List<Medico> listar() {
+        log.info("Listar Medicos");
+        return repo.findAll();
+    }
+
+    public Medico obtener(String id) {
+        log.info("Obtener Medicos", keyValue("run", id));
+
+        return repo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Medico no encontrado"));
+    }
+
+    public Medico actualizar(String id, MedicoDTO dto) {
+        log.info("Actualizar Medico", keyValue("id", id));
+
+        Medico m = obtener(id);
+        m.setNombreMedico(dto.getNombreMedico());
+        m.setEspecialidad(dto.getEspecialidad());
+        m.setEdad(dto.getEdad());
+        m.setNrotelefono(dto.getNroTelefono());
+        m.setFirmaMedico(dto.getFirmaMedico());
+
+        return repo.save(m);
+    }
+
+    public void eliminar(String id) {
+        log.warn("Eliminar Medico", keyValue("run", id));
+        repo.deleteById(id);
     }
 }

@@ -25,6 +25,36 @@ public class MedicoDTO {
     @NotBlank(message = "La especialidad es obligatoria")
     private String especialidad;
 
+    public Object getNombreMedico() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getNombreMedico'");
+    }
+
+    public Integer getEspecialidad() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getEspecialidad'");
+    }
+
+    public Integer getFirmaMedico() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFirmaMedico'");
+    }
+
+    public String getEdad() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getEdad'");
+    }
+
+    public String getNroTelefono() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getNroTelefono'");
+    }
+
+    public String getRun() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRun'");
+    }
+
 
 
 

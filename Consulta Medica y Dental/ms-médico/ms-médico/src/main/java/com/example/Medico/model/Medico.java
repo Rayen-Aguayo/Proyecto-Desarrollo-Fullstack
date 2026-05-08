@@ -1,6 +1,8 @@
 package com.example.Medico.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -15,9 +17,11 @@ import lombok.NoArgsConstructor;
 
 public class Medico {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String run;
     private String nombreMedico;
     private Integer edad;
     private Integer nrotelefono;
     private String especialidad;
+    private String firmaMedico;
 }
