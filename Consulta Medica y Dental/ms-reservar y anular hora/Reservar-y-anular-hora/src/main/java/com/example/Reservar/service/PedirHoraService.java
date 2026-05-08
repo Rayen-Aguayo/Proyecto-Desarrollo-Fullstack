@@ -1,17 +1,11 @@
 package com.example.Reservar.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-
 import com.example.Reservar.client.MedicoClient;
 import com.example.Reservar.client.PacienteClient;
-import com.example.Reservar.dto.MedicoDTO;
-import com.example.Reservar.dto.PacienteDTO;
 import com.example.Reservar.dto.PedirHoraDTO;
 import com.example.Reservar.dto.PedirHoraResponse;
 import com.example.Reservar.model.PedirHora;
@@ -37,18 +31,18 @@ public class PedirHoraService {
 
         log.info("reservar hora", keyValue("nombre del paciente", dto.getNombrePaciente()));
 
-        var pedirHora = pacienteClient.getPacienteClient(dto.getRutPaciente(), token);
+        var paciente = pacienteClient.getPacienteClient(dto.getRutPaciente(), token);
 
-        if (pedirHora == null) {
+        if (paciente == null) {
             throw new RuntimeException("el paciente no existe no se le puede reservar una hora");
         }
 
-        PedirHora pedirHora1 = pedirHoraRepository.save(
+        PedirHora pedirHora = pedirHoraRepository.save(
                 new PedirHora(null, dto.getRutPaciente(),dto.getNombrePaciente(), dto.getNombreMedico(),
                 dto.getFecha(),dto.getHoraDeAtención(), dto.getAtencion())
         );
 
-        return mapToResponse(pedirHora1, token);
+        return mapToResponse(pedirHora, token);
     }
 
     public List<PedirHoraResponse> listar(String token) {
