@@ -69,10 +69,10 @@ public class PedirHoraService {
 
     public PedirHoraResponse actualizar(Long id, PedirHoraDTO dto, String token) {
 
-        var pedirHora = pacienteClient.getPacienteClient(dto.getRutPaciente(), token);
+        var paciente = pacienteClient.getPacienteClient(dto.getRutPaciente(), token);
 
-        if (pedirHora == null) {
-            throw new RuntimeException("la reserva de hora no existe");
+        if (paciente == null) {
+            throw new RuntimeException("el paciente no existe");
         }
 
         PedirHora p = pedirHoraRepository.findById(id)
