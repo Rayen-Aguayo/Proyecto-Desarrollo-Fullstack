@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Medico.dto.ApiResponse;
+import com.example.Medico.dto.ApiResponse.ApiResponseBuilder;
 import com.example.Medico.dto.MedicoDTO;
 import com.example.Medico.model.Medico;
 import com.example.Medico.service.MedicoService;
@@ -31,22 +32,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("api/v1/medicos")
 @RequiredArgsConstructor
 public class MedicoController {
-    
 
-    private final MedicoService service;
+    @Autowired
+    private MedicoService medicoService;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Medico>> crear(@Valid @RequestBody MedicoDTO dto) {
 
-        Medico medico = service.crear(dto);
-
-        return ResponseEntity.status(201).body(
-             ((Object) ApiResponse.<Medico>builder())
-                     .success(success:true)
-                     .message(message:"Medico creado")
-                     .data(medico)
-                     .build()
+        Medico medico = medicoService.crear(dto);
+         return ResponseEntity.status(201).body(
+                ApiResponse.<Medico>builder()
+                        .success(true)
+                        .message("Medico creado")
+                        .data(medico)
+                        .build()
         );
     }
     

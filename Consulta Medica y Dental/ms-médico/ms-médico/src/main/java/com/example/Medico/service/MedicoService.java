@@ -19,26 +19,28 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MedicoService {
 
-    private final MedicoRepository repo;
+    @Autowired
+    private MedicoRepository medicoRepository;
 
     public Medico crear(MedicoDTO dto) {
         log.info("Crear medico", keyValue("nombre", dto.getNombreMedico()));
 
-        Medico m = new Medico(dto.getRun(), dto.getNombreMedico(),
-        dto.getEspecialidad(), dto.getFirmaMedico(), dto.getEdad(), dto.getNroTelefono());
 
-        return repo.save(m);
+        Medico m = new Medico(dto.getRun(),dto.getNombreMedico(),dto.getEdad(), 
+        dto.getNroTelefono(), dto.getEspecialidad(), dto.getFirmaMedico());
+
+        return medicoRepository.save(m);
     }
 
     public List<Medico> listar() {
         log.info("Listar Medicos");
-        return repo.findAll();
+        return medicoRepository.findAll();
     }
 
     public Medico obtener(String id) {
         log.info("Obtener Medicos", keyValue("run", id));
 
-        return repo.findById(id)
+        return medicoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Medico no encontrado"));
     }
 
@@ -49,14 +51,14 @@ public class MedicoService {
         m.setNombreMedico(dto.getNombreMedico());
         m.setEspecialidad(dto.getEspecialidad());
         m.setEdad(dto.getEdad());
-        m.setNrotelefono(dto.getNroTelefono());
+        m.setNroTelefono(dto.getNroTelefono());
         m.setFirmaMedico(dto.getFirmaMedico());
 
-        return repo.save(m);
+        return medicoRepository.save(m);
     }
 
     public void eliminar(String id) {
         log.warn("Eliminar Medico", keyValue("run", id));
-        repo.deleteById(id);
+        medicoRepository.deleteById(id);
     }
 }
