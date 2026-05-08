@@ -22,7 +22,7 @@ import static net.logstash.logback.argument.StructuredArguments.keyValue;
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-
+    
     private final JwtUtil jwtUtil;
 
     @Override

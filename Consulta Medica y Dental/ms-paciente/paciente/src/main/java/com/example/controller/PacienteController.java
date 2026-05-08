@@ -41,14 +41,14 @@ public class PacienteController {
         return ResponseEntity.status(201).body(
                 ApiResponse.<Paciente>builder()
                         .success(true)
-                        .message("Autor creado")
+                        .message("paciente creado")
                         .data(paciente)
                         .build()
         );
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<ApiResponse<List<Paciente>>> listar() {
 
         return ResponseEntity.ok(
@@ -67,7 +67,7 @@ public class PacienteController {
         return ResponseEntity.ok(
                 ApiResponse.<Paciente>builder()
                         .success(true)
-                        .message("Autor obtenido")
+                        .message("paciente obtenido")
                         .data(pacienteService.obtener(id))
                         .build()
         );
@@ -83,7 +83,7 @@ public class PacienteController {
         return ResponseEntity.ok(
                 ApiResponse.<Paciente>builder()
                         .success(true)
-                        .message("Autor actualizado")
+                        .message("paciente actualizado")
                         .data(paciente)
                         .build()
         );
@@ -98,7 +98,7 @@ public class PacienteController {
         return ResponseEntity.ok(
                 ApiResponse.<Void>builder()
                         .success(true)
-                        .message("Autor eliminado")
+                        .message("paciente eliminado")
                         .build()
         );
     }
