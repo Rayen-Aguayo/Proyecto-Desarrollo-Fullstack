@@ -1,6 +1,5 @@
 package com.example.Reservar.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PacienteDTO {
-
-    private String runPaciente;
-    private String nombrePaciente;
+public class MedicoResponse {
+    
+    private String runMeico;
+    private String nombreMedico;
+    private String especialidad;
 }

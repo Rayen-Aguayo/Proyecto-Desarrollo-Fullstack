@@ -2,8 +2,6 @@ package com.example.Pagos.dto;
 
 import java.util.Date;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,27 +9,20 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PagosDTO {
-    @NotBlank
-    private String runPaciente;  
-    @NotBlank
-    private String nombrePaciente;
+public class PagosResponse {
+
+    private Long id;
     
+    private PacienteResponse runPaciente;  
+    private PacienteResponse nombrePaciente;
     private Date fecha;
     private Integer Hora;
-    @NotBlank
     private String MétodoPago;
-    @NotNull
     private Integer nroBoleta;
-    @NotBlank
     private String RegistroFacturación;
-    @NotNull
     private Double neto;
-    @NotNull
     private Double iva;
-    
     private Double total; 
-    @NotBlank
     private String estado; 
 
 }
