@@ -19,7 +19,6 @@ import com.example.Reservar.dto.ApiResponse;
 import com.example.Reservar.dto.PedirHoraDTO;
 import com.example.Reservar.dto.PedirHoraResponse;
 import com.example.Reservar.service.PedirHoraService;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -28,7 +27,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 
 public class PedirHoraController {
-    @Autowired PedirHoraService pedirHoraService;
+    @Autowired 
+    
+    private PedirHoraService pedirHoraService;
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
