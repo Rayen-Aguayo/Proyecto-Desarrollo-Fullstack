@@ -11,7 +11,5 @@ public class MedicoDTO {
     
     private String runMeico;
     private String nombreMedico;
-    private Integer edadMedico;
-    private Integer telefonoMedico;
     private String especialidad;
 }
