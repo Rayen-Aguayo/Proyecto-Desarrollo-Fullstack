@@ -18,12 +18,13 @@ public class Pagos {
     private Long id;
     
     private String runPaciente;  
+    
     private String nombrePaciente;
     private Date fecha;
-    private Integer Hora;
-    private String MétodoPago;
+    private Integer hora;
+    private String métodoPago;
     private Integer nroBoleta;
-    private String RegistroFacturación;
+    private String registroFacturación;
     private Double neto;
     private Double iva;
     private Double total; 

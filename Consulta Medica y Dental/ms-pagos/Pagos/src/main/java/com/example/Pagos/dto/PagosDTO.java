@@ -18,13 +18,13 @@ public class PagosDTO {
     private String nombrePaciente;
     
     private Date fecha;
-    private Integer Hora;
+    private Integer hora;
     @NotBlank
-    private String MétodoPago;
+    private String métodoPago;
     @NotNull
     private Integer nroBoleta;
     @NotBlank
-    private String RegistroFacturación;
+    private String registroFacturación;
     @NotNull
     private Double neto;
     @NotNull

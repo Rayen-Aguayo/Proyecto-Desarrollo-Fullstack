@@ -90,13 +90,22 @@ public class PagosService {
 
     private PagosResponse mapToResponse(Pagos pagos, String token) {
 
-        var paciente = pacienteClient.getPacienteClient(pagos.getRunPaciente(), token);
+        var pacienteRun = pacienteClient.getPacienteClient(pagos.getRunPaciente(), token);
+        var pacienteNom = pacienteClient.getPacienteClient(pagos.getNombrePaciente(), token);
 
         return PagosResponse.builder()
                 .id(pagos.getId())
-                .titulo(pagos.getTitulo())
-                .anio(pagos.getAnio())
-                .autor(autor)
+                .runPaciente(pacienteRun)
+                .nombrePaciente(pacienteNom)
+                .fecha(pagos.getFecha())
+                .hora(pagos.getHora())
+                .métodoPago(pagos.getMétodoPago())
+                .nroBoleta(pagos.getNroBoleta())
+                .registroFacturación(pagos.getRegistroFacturación())
+                .neto(pagos.getNeto())
+                .iva(pagos.getIva())
+                .total(pagos.getTotal())
+                .estado(pagos.getEstado())
                 .build();
     }
 }

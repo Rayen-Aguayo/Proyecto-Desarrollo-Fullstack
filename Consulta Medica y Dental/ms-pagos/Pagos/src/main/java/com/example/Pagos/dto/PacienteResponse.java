@@ -13,13 +13,4 @@ public class PacienteResponse {
 
     private String nombrePaciente;
 
-    private String datosDelPaciente;
-
-    private Integer edad;
-
-    private String alergias;
-    private String enfermedad;
-    private String queMedicamentoEstaTomando;
-
-    private Integer nroTelefonoPaciente;
 }
