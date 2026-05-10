@@ -84,9 +84,7 @@ public class PagosService {
         return mapToResponse(pagosRepository.save(p), token);
     }
 
-    public void eliminar(Long id) {
-        pagosRepository.deleteById(id);
-    }
+
 
     private PagosResponse mapToResponse(Pagos pagos, String token) {
 
