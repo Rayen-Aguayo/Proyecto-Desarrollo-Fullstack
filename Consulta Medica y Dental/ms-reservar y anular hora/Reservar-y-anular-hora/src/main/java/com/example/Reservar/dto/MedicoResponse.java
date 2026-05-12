@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MedicoDTO {
+public class MedicoResponse {
     
     private String runMeico;
     private String nombreMedico;
-    private Integer edadMedico;
-    private Integer telefonoMedico;
     private String especialidad;
 }
