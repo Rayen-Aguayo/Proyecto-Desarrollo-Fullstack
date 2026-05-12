@@ -69,16 +69,6 @@ public class PagosService {
         Pagos p = pagosRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("El pago no existe"));
 
-        p.setRunPaciente(dto.getRunPaciente());
-        p.setNombrePaciente(dto.getNombrePaciente());
-        p.setFecha(dto.getFecha());
-        p.setHora(dto.getHora());
-        p.setMétodoPago(dto.getMétodoPago());
-        p.setNroBoleta(dto.getNroBoleta());
-        p.setRegistroFacturación(dto.getRegistroFacturación());
-        p.setNeto(dto.getNeto());
-        p.setIva(dto.getIva());
-        p.setTotal(dto.getTotal());
         p.setEstado(dto.getEstado());
 
         return mapToResponse(pagosRepository.save(p), token);
