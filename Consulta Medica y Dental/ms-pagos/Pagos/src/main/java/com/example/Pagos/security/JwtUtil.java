@@ -1,4 +1,4 @@
-package com.example.ms_libro.security;
+package com.example.Pagos.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

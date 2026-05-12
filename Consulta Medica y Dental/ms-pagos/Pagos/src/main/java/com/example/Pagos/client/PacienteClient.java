@@ -23,7 +23,8 @@ public class PacienteClient {
                 .retrieve()
                 .bodyToMono(new org.springframework.core.ParameterizedTypeReference<ApiResponse<PacienteResponse>>() {})
                 .block();
-
+ 
         return response != null ? response.getData() : null;
         }
 }
+

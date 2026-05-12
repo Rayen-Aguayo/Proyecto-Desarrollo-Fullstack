@@ -1,9 +1,9 @@
-package com.example.ms_autor.exception;
+package com.example.Pagos.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.ms_autor.dto.ApiResponse;
+import com.example.Pagos.dto.ApiResponse;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
 

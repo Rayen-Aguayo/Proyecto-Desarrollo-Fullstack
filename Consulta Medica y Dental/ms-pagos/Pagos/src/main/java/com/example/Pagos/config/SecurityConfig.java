@@ -1,11 +1,9 @@
-package com.example.ms_autor.config;
+package com.example.Pagos.config;
 
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.*;
-
-import com.example.ms_autor.security.JwtFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,11 +12,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import org.springframework.security.web.access.AccessDeniedHandler;
 
+import com.example.Pagos.dto.ApiResponse;
+import com.example.Pagos.security.JwtFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletResponse;
-
-import com.example.ms_autor.dto.ApiResponse;
 
 @Configuration
 @RequiredArgsConstructor
