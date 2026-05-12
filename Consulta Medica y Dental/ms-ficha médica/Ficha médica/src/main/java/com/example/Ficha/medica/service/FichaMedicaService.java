@@ -3,6 +3,8 @@ package com.example.Ficha.medica.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.Ficha.medica.repository.FichaMedicaRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FichaMedicaService {
 
-    @Autowired
-    private 
+    private final FichaMedicaRepository fichaMedicaRepository;
+
+    public FichaMedica crear()
 }
