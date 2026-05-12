@@ -1,10 +1,10 @@
-package com.example.Reservar.client;
+package com.example.Pagos.client;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.example.Reservar.dto.ApiResponse;
-import com.example.Reservar.dto.PacienteResponse;
+import com.example.Pagos.dto.ApiResponse;
+import com.example.Pagos.dto.PacienteResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +23,8 @@ public class PacienteClient {
                 .retrieve()
                 .bodyToMono(new org.springframework.core.ParameterizedTypeReference<ApiResponse<PacienteResponse>>() {})
                 .block();
-
+ 
         return response != null ? response.getData() : null;
         }
 }
+
