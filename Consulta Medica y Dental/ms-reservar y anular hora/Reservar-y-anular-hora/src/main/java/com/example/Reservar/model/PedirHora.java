@@ -4,6 +4,8 @@ package com.example.Reservar.model;
 
 import java.util.Date;
 
+import com.example.Reservar.dto.PacienteResponse;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
