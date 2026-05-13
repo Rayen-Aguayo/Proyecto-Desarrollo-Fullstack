@@ -1,6 +1,8 @@
 package com.example.Ficha.medica.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -14,6 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FichaMedica {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String run;
     private String nombrePaciente;
     private String nombreMedico;

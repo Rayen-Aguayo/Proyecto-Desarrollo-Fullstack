@@ -38,22 +38,23 @@ public class FichaMedicaService {
         }
 
         FichaMedica fichaMedica = FichaMedicaRepository.save(
-            new FichaMedica(null,dto.getRun(),dto.getNombrePaciente(),dto.getNombreMedico(),
-            dto.getProcedimiento(),dto.getQueMedicamentoEstaTomando(),dto.getAlergias(),dto.getEnfermedad(),
-            dto.getOdontograma())
+            new FichaMedica(null, dto.getNombrePaciente(), dto.getNombreMedico(), dto.getProcedimiento(),
+            dto.getQueMedicamentoEstaTomando(), dto.getEnfermedad(), dto.getAlergias(), dto.getOdontograma())
         );
 
         return mapToResponse(fichaMedica, token);
     }
 
-    public List<FichaMedica> listar() {
-        log.info("Listar Fichas");
-        return FichaMedicaRepository.findAll();
+    public List<FichaMedicaResponse> listar(String token) {
+        return FichaMedicaRepository.findAll()
+                .stream()
+                .map()
+                .map(l -> mapToResponse(l, token))
+                .toList();
     }
 
-    public FichaMedica obtener(String id) {
-        log.info("Obtener Fichas", keyValue("run", id));
-
+    public FichaMedica obtener(Long id, String token) {
+        FichaMedica fichaMedica
         return FichaMedicaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Medico no encontrado"));
     }
@@ -77,5 +78,5 @@ public class FichaMedicaService {
         log.warn("Eliminar Medico", keyValue("run", id));
         FichaMedicaRepository.deleteById(id);
     }
-    }
+
 }
