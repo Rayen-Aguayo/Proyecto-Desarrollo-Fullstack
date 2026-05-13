@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "paciente")
 public class Paciente {
     @Id
-    private String run;
+    private String runPaciente;
 
     private String nombrePaciente;
 
     private String datosDelPaciente;
 
-    private Integer edad;
+    private Integer edadPaciente;
 
     private String alergias;
     private String enfermedad;
