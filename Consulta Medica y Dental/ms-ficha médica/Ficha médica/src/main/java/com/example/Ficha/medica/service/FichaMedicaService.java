@@ -38,7 +38,7 @@ public class FichaMedicaService {
         }
 
         FichaMedica fichaMedica = FichaMedicaRepository.save(
-            new FichaMedica(null, dto.getNombrePaciente(), dto.getNombreMedico(), dto.getProcedimiento(),
+            new FichaMedica(null, dto.getRun(), dto.getNombrePaciente(), dto.getNombreMedico(), dto.getProcedimiento(),
             dto.getQueMedicamentoEstaTomando(), dto.getEnfermedad(), dto.getAlergias(), dto.getOdontograma())
         );
 
