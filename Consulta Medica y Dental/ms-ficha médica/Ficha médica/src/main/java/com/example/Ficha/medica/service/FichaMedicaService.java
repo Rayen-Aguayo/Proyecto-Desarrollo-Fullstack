@@ -1,5 +1,6 @@
 package com.example.Ficha.medica.service;
 
+import static net.logstash.logback.argument.StructuredArguments.f;
 import static net.logstash.logback.argument.StructuredArguments.keyValue;
 
 import java.util.List;
@@ -7,7 +8,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.Ficha.medica.client.MedicoClient;
+import com.example.Ficha.medica.client.PacienteClient;
 import com.example.Ficha.medica.dto.FichaMedicaDTO;
+import com.example.Ficha.medica.dto.FichaMedicaResponse;
 import com.example.Ficha.medica.model.FichaMedica;
 import com.example.Ficha.medica.repository.FichaMedicaRepository;
 
@@ -20,17 +24,26 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FichaMedicaService {
     @Autowired
-    private final FichaMedicaRepository fichaMedicaRepository;
+    private FichaMedicaRepository fichaMedicaRepository;
+    private final PacienteClient pacienteClient;
+    private final MedicoClient medicoClient;
 
-
-    public FichaMedica crear(FichaMedicaDTO dto, String token) {
+    public FichaMedicaResponse crear(FichaMedicaDTO dto, String token) {
         log.info("Crear FichaMedica", keyValue("Paciente", dto.getNombrePaciente()));
 
-        FichaMedica f = new FichaMedica(dto.getRun(),dto.getNombrePaciente(),dto.getNombreMedico(),
-        dto.getProcedimiento(),dto.getQueMedicamentoEstaTomando(),dto.getAlergias(),dto.getEnfermedad(),
-        dto.getOdontograma());
+        var paciente =pacienteClient.getPacienteClient(dto.getRun(), token);
 
-        return fichaMedicaRepository.save(f);
+        if(paciente == null) {
+            throw new RuntimeException("El Paciente no tiene una Ficha Medica")
+        }
+
+        FichaMedica fichaMedica = FichaMedicaRepository.save(
+            new FichaMedica(null,dto.getRun(),dto.getNombrePaciente(),dto.getNombreMedico(),
+            dto.getProcedimiento(),dto.getQueMedicamentoEstaTomando(),dto.getAlergias(),dto.getEnfermedad(),
+            dto.getOdontograma())
+        );
+
+        return mapToResponse(fichaMedica, token);
     }
 
     public List<FichaMedica> listar() {
