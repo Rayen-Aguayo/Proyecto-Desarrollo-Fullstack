@@ -23,7 +23,7 @@ public class FichaMedicaService {
     private final FichaMedicaRepository fichaMedicaRepository;
 
 
-    public FichaMedica crear(FichaMedicaDTO dto) {
+    public FichaMedica crear(FichaMedicaDTO dto, String token) {
         log.info("Crear FichaMedica", keyValue("Paciente", dto.getNombrePaciente()));
 
         FichaMedica f = new FichaMedica(dto.getRun(),dto.getNombrePaciente(),dto.getNombreMedico(),
