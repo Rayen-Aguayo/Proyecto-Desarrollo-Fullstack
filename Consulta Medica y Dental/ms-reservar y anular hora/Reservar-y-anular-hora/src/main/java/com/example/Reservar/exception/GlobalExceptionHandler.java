@@ -1,4 +1,4 @@
-package com.example.ms_libro.exception;
+package com.example.Reservar.exception;
 
 import com.example.ms_libro.dto.ApiResponse;
 
