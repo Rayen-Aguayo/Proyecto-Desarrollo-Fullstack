@@ -17,6 +17,7 @@ import com.example.Ficha.medica.repository.FichaMedicaRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -34,15 +35,31 @@ public class FichaMedicaService {
         var paciente =pacienteClient.getPacienteClient(dto.getRun(), token);
 
         if(paciente == null) {
-            throw new RuntimeException("El Paciente no tiene una Ficha Medica")
+            throw new RuntimeException("El Paciente no tiene una Ficha Medica");
         }
 
-        FichaMedica fichaMedica = FichaMedicaRepository.save(
-            new FichaMedica(null, dto.getRun(), dto.getNombrePaciente(), dto.getNombreMedico(), dto.getProcedimiento(),
-            dto.getQueMedicamentoEstaTomando(), dto.getEnfermedad(), dto.getAlergias(), dto.getOdontograma())
-        );
+        var medico = medicoClient.getMedicoClient(dto.getNombreMedico(), token);
+        
+        if (medico == null) {
+            throw new RuntimeException("Este nombre Medico");
+        }
 
-        return mapToResponse(fichaMedica, token);
+        FichaMedica fichaMedica = fichaMedicaRepository.save(
+            new FichaMedica(
+                null,
+                    dto.getRun(),
+                    dto.getNombrePaciente(),
+                    dto.getNombreMedico(),
+                    dto.getProcedimiento(),
+                    dto.getQueMedicamentoEstaTomando(),
+                    dto.getEnfermedad(),
+                    dto.getAlergias(),
+                    dto.getOdontograma()
+            )
+    );
+    
+    return mapToResponse(fichaMedica, token);
+
     }
 
     public List<FichaMedicaResponse> listar(String token) {
@@ -53,30 +70,60 @@ public class FichaMedicaService {
                 .toList();
     }
 
-    public FichaMedica obtener(Long id, String token) {
-        FichaMedica fichaMedica
-        return FichaMedicaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Medico no encontrado"));
+    public FichaMedicaResponse obtener(Long id, String token) {
+        FichaMedica fichaMedica = fichaMedicaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Ficha Medica no encontrado"));
+        return mapToResponse(fichaMedica, token);
     }
 
-    public FichaMedica actualizar(String id, FichaMedicaDTO dto) {
-        log.info("Actualizar Medico", keyValue("id", id));
+    public FichaMedica actualizar(Long id, FichaMedicaDTO dto, String token) {
+        var paciente = pacienteClient.getPacienteClient(dto.getRun(), token);
 
-        FichaMedica f = obtener(id);
+        if (paciente == null) {
+            throw new RuntimeException("El run de paciente no aparece o no existe");
+        }
+
+        var medico = medicoClient.getMedicoClient(dto.getNombreMedico(), token);
+
+        if (medico == null) {
+            throw new RuntimeException("El nombre de medico no aparece o no existe");
+        }
+
+        FichaMedica f = fichaMedicaRepository.findById(id)
+                      .orElseThrow(() -> new EntityNotFoundException("Ficha Medica no encontrado"));
         f.setNombrePaciente(dto.getNombrePaciente());
         f.setNombreMedico(dto.getNombreMedico());
         f.setProcedimiento(dto.getProcedimiento());
         f.setQueMedicamentoEstaTomando(dto.getQueMedicamentoEstaTomando());
-        f.setEnfermedad(dto.setEnfermedad(););
+        f.setEnfermedad(dto.getEnfermedad());
         f.setAlergias(dto.getAlergias());
         f.setOdontograma(dto.getOdontograma());
 
-        return FichaMedicaRepository.save(f);
+        return mapToResponse(fichaMedicaRepository.save(f), token);
     }
 
-    public void eliminar(String id) {
-        log.warn("Eliminar Medico", keyValue("run", id));
+    public void eliminar(Long id) {
         FichaMedicaRepository.deleteById(id);
     }
 
+    private FichaMedicaResponse mapToResponse(FichaMedica fichaMedica,String token) {
+    var paciente = pacienteClient.getPacienteClient(
+            fichaMedica.getRun(),token
+    );
+    var medico = medicoClient.getMedicoClient(
+            fichaMedica.getNombreMedico(),token
+    );
+    return new FichaMedicaResponse(
+        fichaMedica.getId(),
+        fichaMedica.getRun(),
+        fichaMedica.getNombrePaciente(),
+        fichaMedica.getNombreMedico(),
+        fichaMedica.getProcedimiento(),
+        fichaMedica.getQueMedicamentoEstaTomando(),
+        fichaMedica.getEnfermedad(),
+        fichaMedica.getAlergias(),
+        fichaMedica.getOdontograma()
+    );
+    
+    }
 }
