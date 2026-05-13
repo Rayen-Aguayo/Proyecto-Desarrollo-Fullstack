@@ -68,7 +68,11 @@ public class PedirHoraService {
         if (paciente == null) {
             throw new RuntimeException("el paciente no existe");
         }
+        var medico = medicoClient.getMedicoClient(dto.getNombreMedico(), token);
 
+        if (medico == null) {
+        throw new RuntimeException("El médico no existe");
+        }
         PedirHora p = pedirHoraRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("reserva de hora no encontrado"));
 
