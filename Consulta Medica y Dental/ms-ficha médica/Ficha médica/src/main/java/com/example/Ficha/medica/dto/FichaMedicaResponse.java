@@ -13,7 +13,10 @@ public class FichaMedicaResponse {
     private Long id;
     private PacienteResponse nombrePaciente;
     private MedicoResponse nombreMedico;
-    private PacienteResponse 
+    private PacienteResponse queMedicamentoEstaTomado;
+    private PacienteResponse enfermedad;
+    private PacienteResponse alergias;
+    private String odontograma;
 
 
 }
