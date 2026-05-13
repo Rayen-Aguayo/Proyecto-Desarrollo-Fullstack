@@ -1,6 +1,4 @@
-package com.example.Reservar.model;
-
-
+package com.example.Receta.Medica.model;
 
 import java.util.Date;
 
@@ -14,21 +12,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "RecervarHora")
-public class PedirHora {
+@Entity
+@Table(name = "RecetaMedica")
+public class RecetaMedica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String runPaciente;
-    private String nombrePaciente;
-    private String nombreMedico;
-    private Date fecha;
-    private Integer horaDeAtención;  
-
-    private String atencion;
+    private String nomMedicamento;
+    private Integer diasTomarMedicamento;
+    private Date inicioReceta;
+    private String nomMédico;
+    private String runMedico;
+    private Integer cantTomarDia;
+    private String firmaMédico;
 
 }
