@@ -2,8 +2,15 @@ package com.example.Facturacion.y.Presupuesto.Service;
 
 import static net.logstash.logback.argument.StructuredArguments.keyValue;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.example.Facturacion.y.Presupuesto.client.MedicoClient;
+import com.example.Facturacion.y.Presupuesto.client.PacienteClient;
+import com.example.Facturacion.y.Presupuesto.dto.FacturacionYPresupuestoDTO;
+import com.example.Facturacion.y.Presupuesto.dto.FacturacionYPresupuestoResponse;
+import com.example.Facturacion.y.Presupuesto.model.FacturacionYPresupuesto;
 import com.example.Facturacion.y.Presupuesto.repository.FacturacionYPresupuestoRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -16,72 +23,98 @@ import lombok.extern.slf4j.Slf4j;
 public class FacturacionYPresupuestoService {
 
     private final FacturacionYPresupuestoRepository repository;
-    private final AutorClient autorClient;
+    private final MedicoClient medicoClient;
+    private final PacienteClient pacienteClient;
 
-    public LibroResponse  crear(LibroDTO dto, String token) {
+    public FacturacionYPresupuestoResponse  crear(FacturacionYPresupuestoDTO dto, String token) {
 
-        log.info("Crear libro", keyValue("titulo", dto.getTitulo()));
+        log.info("Crear facturacion y presupuesto", keyValue("nombre del paciente", dto.getNombrePaciente()), keyValue("run del paciente", dto.getRunPaciente()), keyValue("nombre del medico", dto.getNombreMedico()), keyValue("run del medico", dto.getRunMedico()));
 
-        var autor = autorClient.obtenerAutor(dto.getAutorId(), token);
+        var paciente = pacienteClient.getPacienteClient(dto.getRunPaciente(), token);
 
-        if (autor == null) {
-            throw new RuntimeException("Autor no existe");
+        if (paciente == null) {
+            throw new RuntimeException("el paciente no existe no se puede crear la facturacion y el presupuesto");
         }
 
-        Libro libro = repo.save(
-                new Libro(null, dto.getTitulo(), dto.getAnio(), dto.getAutorId())
+        var medico = medicoClient.getMedicoClient(dto.getRunMedico(), token);
+        if (medico == null) {
+                throw new RuntimeException("El médico no existe");
+}
+
+        FacturacionYPresupuesto facypre = repository.save(
+                new FacturacionYPresupuesto(
+                    null, 
+                    dto.getPresupuesto(),
+                    dto.getNombrePaciente(),    
+                    dto.getRunPaciente(),
+                    dto.getNombreMedico(),
+                    dto.getRunMedico(),
+                    dto.getTratamiento(),
+                    dto.getDiasDuracion(),
+                    dto.getGestionPagos()
+                )
         );
 
-        return mapToResponse(libro, token);
+        return mapToResponse(facypre, token);
     }
 
-    public List<LibroResponse> listar(String token) {
+    public List<FacturacionYPresupuestoResponse> listar(String token) {
 
-        return repo.findAll()
+        return repository.findAll()
                 .stream()
                 .map(l -> mapToResponse(l, token))
                 .toList();
     }
 
-    public LibroResponse obtener(Long id, String token) {
+    public FacturacionYPresupuestoResponse obtener(Long id, String token) {
 
-        Libro libro = repo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Libro no encontrado"));
+        FacturacionYPresupuesto facypre = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("FacturacionYPresupuesto no encontrado"));
 
-        return mapToResponse(libro, token);
+        return mapToResponse(facypre, token);
     }
 
-    public LibroResponse actualizar(Long id, LibroDTO dto, String token) {
+    public FacturacionYPresupuestoResponse actualizar(Long id, FacturacionYPresupuestoDTO dto, String token) {
 
-        var autor = autorClient.obtenerAutor(dto.getAutorId(), token);
+        var paciente = pacienteClient.getPacienteClient(dto.getRunPaciente(), token);
 
-        if (autor == null) {
-            throw new RuntimeException("Autor no existe");
+        if (paciente == null) {
+            throw new RuntimeException("El paciente no existe");
         }
 
-        Libro l = repo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Libro no encontrado"));
+        FacturacionYPresupuesto facypre = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("FacturacionYPresupuesto no encontrado"));
 
-        l.setTitulo(dto.getTitulo());
-        l.setAnio(dto.getAnio());
-        l.setAutorId(dto.getAutorId());
+        facypre.setPresupuesto(dto.getPresupuesto());
+        facypre.setNombrePaciente(dto.getNombrePaciente());
+        facypre.setRunPaciente(dto.getRunPaciente());
+        facypre.setNombreMedico(dto.getNombreMedico());
+        facypre.setRunMedico(dto.getRunMedico());
+        facypre.setTratamiento(dto.getTratamiento());
+        facypre.setDiasDuracion(dto.getDiasDuracion());
+        facypre.setGestionPagos(dto.getGestionPagos());
 
-        return mapToResponse(repo.save(l), token);
+        return mapToResponse(repository.save(facypre), token);
     }
 
     public void eliminar(Long id) {
-        repo.deleteById(id);
+        repository.deleteById(id);
     }
 
-    private LibroResponse mapToResponse(Libro libro, String token) {
+    private FacturacionYPresupuestoResponse mapToResponse(FacturacionYPresupuesto facypre, String token) {
 
-        var autor = autorClient.obtenerAutor(libro.getAutorId(), token);
+        var paciente = pacienteClient.getPacienteClient(facypre.getRunPaciente(), token);
+        var medico = medicoClient.getMedicoClient(facypre.getRunMedico(), token);
 
-        return LibroResponse.builder()
-                .id(libro.getId())
-                .titulo(libro.getTitulo())
-                .anio(libro.getAnio())
-                .autor(autor)
+        return FacturacionYPresupuestoResponse.builder()
+                .id(facypre.getId())
+                .presupuesto(facypre.getPresupuesto())
+                .paciente(paciente)
+                .medico(medico)
+                .tratamiento(facypre.getTratamiento())
+                .diasDuracion(facypre.getDiasDuracion())
+                .gestionPagos(facypre.getGestionPagos())
                 .build();
+
     }
 }
