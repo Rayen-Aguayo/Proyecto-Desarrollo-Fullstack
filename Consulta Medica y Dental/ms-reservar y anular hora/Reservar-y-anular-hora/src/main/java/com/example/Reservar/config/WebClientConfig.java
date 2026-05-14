@@ -1,4 +1,4 @@
-package com.example.ms_libro.config;
+package com.example.Reservar.config;
 
 import org.springframework.context.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
