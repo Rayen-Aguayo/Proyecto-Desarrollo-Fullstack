@@ -44,7 +44,7 @@ public class RecetaMedicaController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<ApiResponse<List<RecetaMedicaResponce>>> listar(
             @RequestHeader("Authorization") String token) {
 
@@ -57,7 +57,7 @@ public class RecetaMedicaController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<ApiResponse<RecetaMedicaResponce>> obtener(
             @PathVariable Long id,
             @RequestHeader("Authorization") String token) {
