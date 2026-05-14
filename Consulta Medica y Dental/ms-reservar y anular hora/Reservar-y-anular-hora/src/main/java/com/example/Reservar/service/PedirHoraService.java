@@ -105,15 +105,13 @@ public class PedirHoraService {
 
     private PedirHoraResponse mapToResponse(PedirHora pedirHora, String token) {
 
-        var pacienteRun = pacienteClient.getPacienteClient(pedirHora.getRunPaciente(), token);
-        var pacienteNom = pacienteClient.getPacienteClient(pedirHora.getNombrePaciente(), token);
+        var paciente = pacienteClient.getPacienteClient(pedirHora.getRunPaciente(), token);
         var medico = medicoClient.getMedicoClient(pedirHora.getNombreMedico(), token);
 
         return PedirHoraResponse.builder()
                 .id(pedirHora.getId())
-                .runPaciente(pacienteRun)
-                .nombrePaciente(pacienteNom)
-                .nombreMedico(medico)
+                .paciente(paciente)
+                .medico(medico)
                 .fecha(pedirHora.getFecha())
                 .horaDeAtencion(pedirHora.getHoraDeAtencion())  
                 .atencion(pedirHora.getAtencion())

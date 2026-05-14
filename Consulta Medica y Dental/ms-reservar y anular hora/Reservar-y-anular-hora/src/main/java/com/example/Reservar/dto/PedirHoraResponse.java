@@ -16,9 +16,8 @@ public class PedirHoraResponse {
     
     private Long id;
     
-    private PacienteResponse runPaciente;
-    private PacienteResponse nombrePaciente;
-    private MedicoResponse nombreMedico;
+   private PacienteResponse paciente;
+    private MedicoResponse medico;
     private LocalDate fecha;
     private LocalTime horaDeAtencion;  
 
