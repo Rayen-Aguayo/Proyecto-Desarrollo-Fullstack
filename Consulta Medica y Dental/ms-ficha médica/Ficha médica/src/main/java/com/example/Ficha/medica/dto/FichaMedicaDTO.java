@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FichaMedicaDTO {
     @NotBlank(message = "El run no puede estar vacio")
-    private String run;
+    private String runPaciente;
 
     @NotBlank(message = "El Nombre del Paciente no puede esta vacio")
     private String nombrePaciente;
