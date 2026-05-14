@@ -1,6 +1,6 @@
 package com.example.Receta.Medica.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,10 +23,10 @@ public class RecetaMedica {
     
     private String nomMedicamento;
     private Integer diasTomarMedicamento;
-    private Date inicioReceta;
-    private String nomMédico;
+    private LocalDate inicioReceta;
+    private String nomMedico;
     private String runMedico;
     private Integer cantTomarDia;
-    private String firmaMédico;
+    private String firmaMedico;
 
 }

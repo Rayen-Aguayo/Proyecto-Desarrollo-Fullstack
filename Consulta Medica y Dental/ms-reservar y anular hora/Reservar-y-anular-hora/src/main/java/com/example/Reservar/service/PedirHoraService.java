@@ -1,10 +1,7 @@
 package com.example.Reservar.service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.Reservar.client.MedicoClient;
 import com.example.Reservar.client.PacienteClient;
@@ -115,7 +112,6 @@ public class PedirHoraService {
                 .fecha(pedirHora.getFecha())
                 .horaDeAtencion(pedirHora.getHoraDeAtencion())  
                 .atencion(pedirHora.getAtencion())
-
                 .build();
     }
 }

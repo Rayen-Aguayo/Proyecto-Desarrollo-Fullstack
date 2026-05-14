@@ -1,6 +1,6 @@
 package com.example.Receta.Medica.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class RecetaMedicaResponce {
-    
+
+    private Long id;
     private String nomMedicamento;
     private Integer diasTomarMedicamento;
-    private Date inicioReceta;
-    private MedicoDTO nomMédico;
-    private MedicoDTO runMedico;
+    private LocalDate inicioReceta;
+    private MedicoResponse medico;
     private Integer cantTomarDia;
-    private String firmaMédico;
 }

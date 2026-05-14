@@ -1,6 +1,6 @@
 package com.example.Receta.Medica.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,10 +14,10 @@ public class RecetaMedicaDTO {
     private Integer diasTomarMedicamento;
 
     @NotNull(message = "La fecha de inicio de la receta no puede estar vacia")
-    private Date inicioReceta;
+    private LocalDate inicioReceta;
 
     @NotBlank(message = "El nombre del medico es obligatorio")
-    private String nomMédico;
+    private String nomMedico;
 
     @NotBlank(message = "El run del medico es obligatorio")
     private String runMedico;
@@ -26,5 +26,5 @@ public class RecetaMedicaDTO {
     private Integer cantTomarDia;
 
     @NotBlank(message = "La firma del medico es obligatorio")
-    private String firmaMédico;
+    private String firmaMedico;
 }

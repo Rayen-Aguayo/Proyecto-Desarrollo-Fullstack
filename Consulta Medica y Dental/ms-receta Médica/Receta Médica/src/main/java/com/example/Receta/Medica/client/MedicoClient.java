@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.example.Receta.Medica.dto.ApiResponse;
-import com.example.Receta.Medica.dto.MedicoDTO;
+import com.example.Receta.Medica.dto.MedicoResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,13 +15,13 @@ public class MedicoClient {
 
     private final String BASE_URL = "http://localhost:8080/api/v1/medicos";
 
-    public MedicoDTO obtenerAutor(String id, String token) {
+    public MedicoResponse getMedicoClient(String id, String token) {
 
-        ApiResponse<MedicoDTO> response = webClient.get()
+        ApiResponse<MedicoResponse> response = webClient.get()
                 .uri(BASE_URL + id)
                 .header("Authorization", token)
                 .retrieve()
-                .bodyToMono(new org.springframework.core.ParameterizedTypeReference<ApiResponse<MedicoDTO>>() {})
+                .bodyToMono(new org.springframework.core.ParameterizedTypeReference<ApiResponse<MedicoResponse>>() {})
                 .block();
 
         return response != null ? response.getData() : null;
