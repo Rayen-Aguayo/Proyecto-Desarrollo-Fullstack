@@ -1,4 +1,4 @@
-package com.example.ms_libro.dto;
+package com.example.Facturacion.y.Presupuesto.dto;
 
 import lombok.*;
 
