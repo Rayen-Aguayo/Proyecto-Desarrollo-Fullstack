@@ -18,7 +18,7 @@ public class FichaMedica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String run;
+    private String runPaciente;
     private String nombrePaciente;
     private String nombreMedico;
     private String procedimiento;

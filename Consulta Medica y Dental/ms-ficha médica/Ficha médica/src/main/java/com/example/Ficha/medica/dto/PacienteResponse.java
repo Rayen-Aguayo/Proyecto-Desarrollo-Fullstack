@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PacienteResponse {
-    private String run;
+    private String runPaciente;
     private String nombrePaciente;
     private String alergias;
     private String enfermedad;
