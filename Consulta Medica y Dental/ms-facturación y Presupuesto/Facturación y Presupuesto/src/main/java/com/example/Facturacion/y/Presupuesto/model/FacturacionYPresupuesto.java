@@ -22,7 +22,9 @@ public class FacturacionYPresupuesto {
 
     private Double presupuesto;
     private String nombrePaciente;
+    private String runPaciente;
     private String nombreMedico;
+    private String runMedico;
     private String tratamiento;
     private Integer diasDuracion;
     private String gestionPagos;

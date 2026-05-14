@@ -1,4 +1,4 @@
-package com.example.Reservar.dto;
+package com.example.Facturacion.y.Presupuesto.dto;
 
 import lombok.Data;
 
@@ -8,5 +8,5 @@ public class MedicoResponse {
     
     private String runMedico;
     private String nombreMedico;
-    private String especialidad;
+
 }
