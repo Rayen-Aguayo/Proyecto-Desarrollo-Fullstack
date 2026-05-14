@@ -1,14 +1,21 @@
 package com.example.Pagos.model;
 
-import java.util.Date;
 
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = "pagos")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,17 +24,15 @@ public class Pagos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String runPaciente;  
-    
+    private String runPaciente;    
     private String nombrePaciente;
-    private Date fecha;
-    private Integer hora;
-    private String métodoPago;
+    private LocalDate fecha;
+    private LocalTime hora;
+    private String metodoPago;
     private Integer nroBoleta;
-    private String registroFacturación;
+    private String registroFacturacion;
     private Double neto;
     private Double iva;
     private Double total; 
     private String estado; 
-
 }

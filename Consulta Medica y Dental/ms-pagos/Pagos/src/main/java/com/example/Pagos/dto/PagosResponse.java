@@ -1,6 +1,8 @@
 package com.example.Pagos.dto;
 
-import java.util.Date;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,14 +19,15 @@ public class PagosResponse {
     
     private PacienteResponse runPaciente;  
     private PacienteResponse nombrePaciente;
-    private Date fecha;
-    private Integer hora;
-    private String métodoPago;
+    private LocalDate fecha;
+    private LocalTime hora;
+    private String metodoPago;
     private Integer nroBoleta;
-    private String registroFacturación;
+    private String registroFacturacion;
     private Double neto;
     private Double iva;
     private Double total; 
     private String estado; 
 
+    
 }

@@ -1,5 +1,7 @@
 package com.example.Reservar.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,25 +23,36 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class PedirHoraService {
-    @Autowired
-    private PedirHoraRepository pedirHoraRepository;
+
+    private final PedirHoraRepository pedirHoraRepository;
     private final PacienteClient pacienteClient;
     private final MedicoClient medicoClient;
 
 
     public PedirHoraResponse  crear(PedirHoraDTO dto, String token) {
 
-        log.info("reservar hora", keyValue("nombre del paciente", dto.getNombrePaciente()));
+        log.info("reservar hora", keyValue("run del paciente", dto.getRunPaciente()));
 
-        var paciente = pacienteClient.getPacienteClient(dto.getRutPaciente(), token);
+        var paciente = pacienteClient.getPacienteClient(dto.getRunPaciente(), token);
 
         if (paciente == null) {
             throw new RuntimeException("el paciente no existe no se le puede reservar una hora");
         }
+        var medico = medicoClient.getMedicoClient(dto.getNombreMedico(), token);
+        if (medico == null) {
+                throw new RuntimeException("El médico no existe");
+}
 
         PedirHora pedirHora = pedirHoraRepository.save(
-                new PedirHora(null, dto.getRutPaciente(),dto.getNombrePaciente(), dto.getNombreMedico(),
-                dto.getFecha(),dto.getHoraDeAtención(), dto.getAtencion())
+               new PedirHora(
+                        null,
+                        dto.getRunPaciente(),
+                        dto.getNombrePaciente(),
+                        dto.getNombreMedico(),
+                        dto.getFecha(),
+                        dto.getHoraDeAtencion(),
+                        dto.getAtencion()
+                    )
         );
 
         return mapToResponse(pedirHora, token);
@@ -63,7 +76,7 @@ public class PedirHoraService {
 
     public PedirHoraResponse actualizar(Long id, PedirHoraDTO dto, String token) {
 
-        var paciente = pacienteClient.getPacienteClient(dto.getRutPaciente(), token);
+        var paciente = pacienteClient.getPacienteClient(dto.getRunPaciente(), token);
 
         if (paciente == null) {
             throw new RuntimeException("el paciente no existe");
@@ -77,11 +90,11 @@ public class PedirHoraService {
                 .orElseThrow(() -> new EntityNotFoundException("reserva de hora no encontrado"));
 
 
-        p.setRunPaciente(dto.getRutPaciente());
+        p.setRunPaciente(dto.getRunPaciente());
         p.setNombrePaciente(dto.getNombrePaciente());
         p.setNombreMedico(dto.getNombreMedico());
         p.setFecha(dto.getFecha());
-        p.setHoraDeAtención(dto.getHoraDeAtención());
+        p.setHoraDeAtencion(dto.getHoraDeAtencion());
 
         return mapToResponse(pedirHoraRepository.save(p), token);
     }
@@ -100,9 +113,9 @@ public class PedirHoraService {
                 .id(pedirHora.getId())
                 .runPaciente(pacienteRun)
                 .nombrePaciente(pacienteNom)
-                .nombreMédico(medico)
+                .nombreMedico(medico)
                 .fecha(pedirHora.getFecha())
-                .horaDeAtención(pedirHora.getHoraDeAtención())  
+                .horaDeAtencion(pedirHora.getHoraDeAtencion())  
                 .atencion(pedirHora.getAtencion())
 
                 .build();

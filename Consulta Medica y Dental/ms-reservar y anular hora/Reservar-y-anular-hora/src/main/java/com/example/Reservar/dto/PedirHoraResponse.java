@@ -1,6 +1,7 @@
 package com.example.Reservar.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,9 +18,9 @@ public class PedirHoraResponse {
     
     private PacienteResponse runPaciente;
     private PacienteResponse nombrePaciente;
-    private MedicoResponse nombreMédico;
-    private Date fecha;
-    private Integer horaDeAtención;  
+    private MedicoResponse nombreMedico;
+    private LocalDate fecha;
+    private LocalTime horaDeAtencion;  
 
     private String atencion;
 }

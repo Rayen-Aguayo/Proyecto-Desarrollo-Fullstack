@@ -2,7 +2,8 @@ package com.example.Reservar.model;
 
 
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,8 +27,8 @@ public class PedirHora {
     private String runPaciente;
     private String nombrePaciente;
     private String nombreMedico;
-    private Date fecha;
-    private Integer horaDeAtención;  
+    private LocalDate fecha;
+    private LocalTime horaDeAtencion;  
 
     private String atencion;
 

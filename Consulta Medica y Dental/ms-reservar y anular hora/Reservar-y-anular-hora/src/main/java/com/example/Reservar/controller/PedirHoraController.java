@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/recervar-y-anular-hora")
+@RequestMapping("/api/v1/reservar-y-anular-hora")
 @RequiredArgsConstructor
 
 public class PedirHoraController {

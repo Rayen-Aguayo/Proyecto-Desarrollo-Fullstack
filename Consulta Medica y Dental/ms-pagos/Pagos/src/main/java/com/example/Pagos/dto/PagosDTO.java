@@ -1,37 +1,38 @@
 package com.example.Pagos.dto;
 
-import java.util.Date;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class PagosDTO {
-    @NotBlank
+    @NotBlank(message = "El run del paciente es obligatorio")
     private String runPaciente;  
-    @NotBlank
+    @NotBlank(message = "El nombre del paciente es obligatorio")
     private String nombrePaciente;
-    
-    private Date fecha;
-    private Integer hora;
-    @NotBlank
-    private String métodoPago;
-    @NotNull
+    @NotBlank(message = "La fecha es obligatoria")
+    private LocalDate fecha;
+    @NotNull(message = "La hora es obligatoria")
+    private LocalTime hora;
+    @NotBlank(message = "El método de pago es obligatorio")
+    private String metodoPago;
+    @NotNull(message = "El número de boleta es obligatorio")
     private Integer nroBoleta;
-    @NotBlank
-    private String registroFacturación;
-    @NotNull
+    @NotBlank(message = "El registro de facturación es obligatorio")
+    private String registroFacturacion;
+    @NotNull(message = "El neto es obligatorio")
     private Double neto;
-    @NotNull
+    @NotNull(message = "El IVA es obligatorio")
     private Double iva;
     
     private Double total; 
-    @NotBlank
+    @NotBlank(message = "El estado es obligatorio")
     private String estado; 
+
 
 }

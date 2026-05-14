@@ -26,19 +26,27 @@ public class PagosService {
 
     public PagosResponse  crear(PagosDTO dto, String token) {
 
-        log.info("registrar pago", keyValue("nombre paciente", dto.getRunPaciente()));
+        log.info("registrar pago", keyValue("run paciente", dto.getRunPaciente()));
 
-        var paciente = pacienteClient.getPacienteClient(dto.getRunPaciente(), token);
-
-        if (paciente == null) {
+        var pacienteRun = pacienteClient.getPacienteClient(dto.getRunPaciente(), token);
+        
+        if (pacienteRun == null) {
             throw new RuntimeException("El paciente no existe");
         }
 
-        Pagos pagos = pagosRepository.save(
-                new Pagos(null,dto.getRunPaciente(), dto.getNombrePaciente(),dto.getFecha(),
-                         dto.getHora(),dto.getMétodoPago(),dto.getNroBoleta(),dto.getRegistroFacturación(),
-                         dto.getNeto(),dto.getIva(),dto.getTotal(), dto.getEstado())
-        );
+            Pagos pagos = new Pagos(null, 
+                dto.getRunPaciente(), 
+                dto.getNombrePaciente(), 
+                dto.getFecha(),
+                dto.getHora(),
+                dto.getMetodoPago(),
+                dto.getNroBoleta(),
+                dto.getRegistroFacturacion(),
+                dto.getNeto(),
+                dto.getIva(),
+                dto.getTotal(),
+                dto.getEstado());
+                    
         return mapToResponse(pagos, token);
     }
 
@@ -63,7 +71,7 @@ public class PagosService {
         var paciente = pacienteClient.getPacienteClient(dto.getRunPaciente(), token);
 
         if (paciente == null) {
-            throw new RuntimeException("Autor no existe");
+            throw new RuntimeException("El paciente no existe");
         }
 
         Pagos p = pagosRepository.findById(id)
@@ -87,9 +95,9 @@ public class PagosService {
                 .nombrePaciente(pacienteNom)
                 .fecha(pagos.getFecha())
                 .hora(pagos.getHora())
-                .métodoPago(pagos.getMétodoPago())
+                .metodoPago(pagos.getMetodoPago())
                 .nroBoleta(pagos.getNroBoleta())
-                .registroFacturación(pagos.getRegistroFacturación())
+                .registroFacturacion(pagos.getRegistroFacturacion())
                 .neto(pagos.getNeto())
                 .iva(pagos.getIva())
                 .total(pagos.getTotal())
