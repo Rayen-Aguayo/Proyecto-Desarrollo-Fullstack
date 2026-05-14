@@ -1,4 +1,4 @@
-package com.example.Reservar.controller;
+package com.example.Receta.Medica.controller;
 
 import java.util.List;
 
@@ -14,88 +14,88 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Reservar.dto.ApiResponse;
-import com.example.Reservar.dto.PedirHoraDTO;
-import com.example.Reservar.dto.PedirHoraResponse;
-import com.example.Reservar.service.PedirHoraService;
+import com.example.Receta.Medica.dto.ApiResponse;
+import com.example.Receta.Medica.dto.RecetaMedicaDTO;
+import com.example.Receta.Medica.dto.RecetaMedicaResponce;
+import com.example.Receta.Medica.service.RecetamedicaService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/reservar-y-anular-hora")
+@RequestMapping("/api/v1/recetasMedicas")
 @RequiredArgsConstructor
+public class RecetaMedicaController {
 
-public class PedirHoraController { 
-    private final PedirHoraService pedirHoraService;
-
+    private final RecetamedicaService recetamedicaService;
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<ApiResponse<PedirHoraResponse>> crear(
-            @Valid @RequestBody PedirHoraDTO dto,
+    public ResponseEntity<ApiResponse<RecetaMedicaResponce>> crear(
+            @Valid @RequestBody RecetaMedicaDTO dto,
             @RequestHeader("Authorization") String token) {
 
         return ResponseEntity.status(201).body(
-                ApiResponse.<PedirHoraResponse>builder()
+                ApiResponse.<RecetaMedicaResponce>builder()
                         .success(true)
-                        .message("Se reservo la hora")
-                        .data(pedirHoraService.crear(dto, token))
+                        .message("Receta médica creada")
+                        .data(recetamedicaService.crear(dto, token))
                         .build()
         );
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<ApiResponse<List<PedirHoraResponse>>> listar(
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public ResponseEntity<ApiResponse<List<RecetaMedicaResponce>>> listar(
             @RequestHeader("Authorization") String token) {
 
         return ResponseEntity.ok(
-                ApiResponse.<List<PedirHoraResponse>>builder()
+                ApiResponse.<List<RecetaMedicaResponce>>builder()
                         .success(true)
-                        .data(pedirHoraService.listar(token))
+                        .data(recetamedicaService.listar(token))
                         .build()
         );
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<ApiResponse<PedirHoraResponse>> obtener(
+    public ResponseEntity<ApiResponse<RecetaMedicaResponce>> obtener(
             @PathVariable Long id,
             @RequestHeader("Authorization") String token) {
 
         return ResponseEntity.ok(
-                ApiResponse.<PedirHoraResponse>builder()
+                ApiResponse.<RecetaMedicaResponce>builder()
                         .success(true)
-                        .data(pedirHoraService.obtener(id, token))
+                        .data(recetamedicaService.obtener(id, token))
                         .build()
         );
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<ApiResponse<PedirHoraResponse>> actualizar(
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<ApiResponse<RecetaMedicaResponce>> actualizar(
             @PathVariable Long id,
-            @Valid @RequestBody PedirHoraDTO dto,
+            @Valid @RequestBody RecetaMedicaDTO dto,
             @RequestHeader("Authorization") String token) {
 
         return ResponseEntity.ok(
-                ApiResponse.<PedirHoraResponse>builder()
+                ApiResponse.<RecetaMedicaResponce>builder()
                         .success(true)
-                        .message("Se cambio la hora")
-                        .data(pedirHoraService.actualizar(id, dto, token))
+                        .message("Receta médica actualizada")
+                        .data(recetamedicaService.actualizar(id, dto, token))
                         .build()
         );
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable Long id) {
 
-        pedirHoraService.eliminar(id);
+        recetamedicaService.eliminar(id);
 
         return ResponseEntity.ok(
                 ApiResponse.<Void>builder()
                         .success(true)
-                        .message("Se anulo la hora")
+                        .message("Receta médica eliminada")
                         .build()
         );
     }

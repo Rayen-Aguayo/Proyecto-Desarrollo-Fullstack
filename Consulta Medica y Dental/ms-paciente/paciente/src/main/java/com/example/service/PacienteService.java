@@ -2,7 +2,6 @@ package com.example.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.dto.PacienteDTO;
@@ -19,8 +18,7 @@ import static net.logstash.logback.argument.StructuredArguments.keyValue;
 @RequiredArgsConstructor
 @Slf4j
 public class PacienteService {
-    @Autowired
-    private PacienteRepository pacienteRepository;
+    private final PacienteRepository pacienteRepository;
 
     public Paciente crear(PacienteDTO dto) {
         log.info("Crear paciente", keyValue("nombre", dto.getNombrePaciente()));
