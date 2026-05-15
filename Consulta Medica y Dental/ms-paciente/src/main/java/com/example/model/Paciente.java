@@ -4,6 +4,8 @@ package com.example.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,5 +29,7 @@ public class Paciente {
     private String enfermedad;
     private String queMedicamentoEstaTomando;
 
-    private Integer nroTelefono;
+    private String nroTelefono;
+
+
 }

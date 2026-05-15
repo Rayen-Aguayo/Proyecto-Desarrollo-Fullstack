@@ -23,8 +23,8 @@ public class PacienteService {
     public Paciente crear(PacienteDTO dto) {
         log.info("Crear paciente", keyValue("nombre", dto.getNombrePaciente()));
 
-        Paciente p = new Paciente(dto.getRun(), dto.getNombrePaciente(), 
-        dto.getDatosDelPaciente(), dto.getEdad(), dto.getAlergias(), 
+        Paciente p = new Paciente(dto.getRunPaciente(), dto.getNombrePaciente(), 
+        dto.getDatosDelPaciente(), dto.getEdadPaciente(), dto.getAlergias(), 
         dto.getEnfermedad(), dto.getQueMedicamentoEstaTomando(), dto.getNroTelefono());
  
         return pacienteRepository.save(p);
@@ -43,16 +43,18 @@ public class PacienteService {
     }
 
     public Paciente actualizar(String id, PacienteDTO dto) {
-        log.info("Actualizar autor", keyValue("id", id));
+        log.info("Actualizar paciente", keyValue("run", id));
 
         Paciente p = obtener(id);
         p.setNombrePaciente(dto.getNombrePaciente()); 
         p.setDatosDelPaciente(dto.getDatosDelPaciente());
-        p.setEdad(dto.getEdad());
+        p.setEdadPaciente(dto.getEdadPaciente());
         p.setAlergias(dto.getAlergias()); 
         p.setEnfermedad(dto.getEnfermedad());
         p.setQueMedicamentoEstaTomando(dto.getQueMedicamentoEstaTomando());        
         p.setNroTelefono(dto.getNroTelefono());
+
+
 
         return pacienteRepository.save(p);
     }
