@@ -19,7 +19,7 @@ public class Medico {
 
     private String nombreMedico;
     private Integer edad;
-    private Integer nroTelefono;
+    private String nroTelefono;
     private String especialidad;
     private String firmaMedico;
 }
