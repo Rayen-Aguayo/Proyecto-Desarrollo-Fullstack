@@ -23,9 +23,9 @@ public class MedicoDTO {
     @Min(value = 0, message = "La edad debe ser positiva")
     private Integer edad;
 
-    @NotNull(message = "El numero del telefono es obligatorio")
+    @NotBlank(message = "El numero del telefono es obligatorio") 
     @Size(min = 9, max = 9, message = "El numero del telefono debe tener 9 digitos")
-    private Integer nroTelefono;
+    private String nroTelefono;
 
     @NotBlank(message = "La especialidad es obligatoria")
     private String especialidad;
