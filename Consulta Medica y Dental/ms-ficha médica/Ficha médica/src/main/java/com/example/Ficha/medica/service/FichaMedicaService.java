@@ -76,23 +76,14 @@ public class FichaMedicaService {
             Long id,
             FichaMedicaDTO dto,
             String token) {
-        var paciente = pacienteClient.getPacienteClient(
-                dto.getRunPaciente(),
-                token);
-
+        var paciente = pacienteClient.getPacienteClient(dto.getRunPaciente(),token);
         if (paciente == null) {
-            throw new RuntimeException(
-                    "El paciente no existe");
+            throw new RuntimeException("El paciente no existe");
         }
-        var medico = medicoClient.getMedicoClient(
-                dto.getNombreMedico(),
-                token);
-
+        var medico = medicoClient.getMedicoClient(dto.getNombreMedico(),token);
         if (medico == null) {
-            throw new RuntimeException(
-                    "El médico no existe");
+            throw new RuntimeException("El médico no existe");
         }
-
 
         FichaMedica ficha = fichaMedicaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Ficha médica no encontrada"));
@@ -110,26 +101,18 @@ public class FichaMedicaService {
         return mapToResponse(fichaActualizada, token);
     }
 
-    // ELIMINAR
     public void eliminar(Long id) {
-
         FichaMedica fichaMedica = fichaMedicaRepository.findById(id)
-                .orElseThrow(() ->
-                        new EntityNotFoundException(
-                                "Ficha médica no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Ficha médica no encontrada"));
         fichaMedicaRepository.delete(fichaMedica);
     }
 
     private FichaMedicaResponse mapToResponse(FichaMedica fichaMedica, String token) {
-        var paciente = pacienteClient.getPacienteClient(
-                fichaMedica.getRunPaciente(),
-                token);
-        var medico = medicoClient.getMedicoClient(
-                fichaMedica.getNombreMedico(),
-                token);
+        var paciente = pacienteClient.getPacienteClient(fichaMedica.getRunPaciente(), token);
+        var medico = medicoClient.getMedicoClient(fichaMedica.getNombreMedico(), token);
         return FichaMedicaResponse.builder()
                 .id(fichaMedica.getId())
-                .runPaciente(paciente)
+                .runPaciente(fichaMedica.getRunPaciente())
                 .nombrePaciente(paciente.getNombrePaciente())
                 .nombreMedico(medico.getNombreMedico())
                 .procedimiento(fichaMedica.getProcedimiento())

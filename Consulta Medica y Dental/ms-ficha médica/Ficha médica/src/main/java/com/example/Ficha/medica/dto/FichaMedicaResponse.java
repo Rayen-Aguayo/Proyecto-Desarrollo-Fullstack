@@ -11,11 +11,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class FichaMedicaResponse {
     private Long id;
-    private PacienteResponse ruPaciente;
-    private PacienteResponse nombrePaciente;
-    private MedicoResponse nombreMedico;
-    private PacienteResponse queMedicamentoEstaTomado;
-    private PacienteResponse enfermedad;
-    private PacienteResponse alergias;
+
+    private String runPaciente;
+    private String nombrePaciente;
+    private String nombreMedico;
+    private String procedimiento;
+    private String queMedicamentoEstaTomando;
+    private String enfermedad;
+    private String alergias;
     private String odontograma;
 }
+

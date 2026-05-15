@@ -25,10 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/v1/fichas_medicas")
-@RequiredArgsConstructor
 public class FichaMedicaController {
     @Autowired
-    private FichaMedicaService fichaMedicaService;
+    private final FichaMedicaService fichaMedicaService;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
