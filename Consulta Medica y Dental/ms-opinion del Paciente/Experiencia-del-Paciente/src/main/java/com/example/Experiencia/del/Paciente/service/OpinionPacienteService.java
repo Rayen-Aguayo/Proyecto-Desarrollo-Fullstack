@@ -7,6 +7,7 @@ import com.example.Experiencia.del.Paciente.dto.OpinionPacienteDTO;
 import com.example.Experiencia.del.Paciente.dto.OpinionPacienteResponse;
 import com.example.Experiencia.del.Paciente.model.OpinionPaciente;
 import com.example.Experiencia.del.Paciente.repository.OpinionPacienteRepository;
+import static net.logstash.logback.argument.StructuredArguments.keyValue;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -23,17 +24,21 @@ public class OpinionPacienteService {
     private final PacienteClient pacienteClient;
 
     public OpinionPacienteResponse crear(OpinionPacienteDTO dto, String token) {
-        log.info("Registrando nueva opinión para el paciente: {}", dto.getRunPaciente());
+
+        log.info("Registrando nueva opinión para el paciente: {}", keyValue("run del paciente", dto.getRunPaciente()));
+        
         var paciente = pacienteClient.getPacienteClient(dto.getRunPaciente(), token);
         if (paciente == null) {
             throw new RuntimeException("El paciente no existe, no se puede registrar la opinión");
         }
+
         var medico = medicoClient.getMedicoClient(dto.getNombreMedico(),token);
+
         if (medico == null) {
             throw new RuntimeException("El médico no existe");
         }
 
-        OpinionPaciente opinionPaciente = OpinionPacienteRepository.save(
+        OpinionPaciente opinionPaciente = opinionPacienteRepository.save(
                 new OpinionPaciente(
                         null,
                         dto.getRunPaciente(),
@@ -41,24 +46,25 @@ public class OpinionPacienteService {
                         dto.getAtencionMedico(),
                         dto.getExpliqueSuPuntuacion(),
                         dto.getExplicacionTratamiento(),
+                        dto.getComentarioMejora(),
+                        dto.getPuntuacionMedico())
+        );
+
         return mapToResponse(opinionPaciente, token);
 
-        OpinionPaciente guardada = opinionPacienteRepository.save(opinionPaciente);
-
-        return mapToResponse(guardada);
     }
 
-    public List<OpinionPacienteResponse> listar() {
+    public List<OpinionPacienteResponse> listar(String token) {
         return opinionPacienteRepository.findAll()
                 .stream()
-                .map(this::mapToResponse)
+                .map(o -> mapToResponse(o, token))
                 .toList();
     }
 
-    public OpinionPacienteResponse obtener(Long id) {
+    public OpinionPacienteResponse obtener(Long id,String token) {
         OpinionPaciente opinion = opinionPacienteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Opinión no encontrada"));
-        return mapToResponse(opinion);
+        return mapToResponse(opinion, token);
     }
 
     public void eliminar(Long id) {
@@ -69,11 +75,13 @@ public class OpinionPacienteService {
     }
 
     // Método para convertir el Modelo a Response
-    private OpinionPacienteResponse mapToResponse(OpinionPaciente opinion) {
+    private OpinionPacienteResponse mapToResponse(OpinionPaciente opinion, String token) {
+        var paciente = pacienteClient.getPacienteClient(opinion.getRunPaciente(), token);
+        var medico = medicoClient.getMedicoClient(opinion.getNombreMedico(), token);
         return OpinionPacienteResponse.builder()
                 .id(opinion.getId())
-                .runPaciente(opinion.getRunPaciente())
-                .nombreMedico(opinion.getNombreMedico())
+                .runPaciente(paciente)
+                .nombreMedico(medico)
                 .atencionMedico(opinion.getAtencionMedico())
                 .expliqueSuPuntuacion(opinion.getExpliqueSuPuntuacion())
                 .explicacionTratamiento(opinion.getExplicacionTratamiento())

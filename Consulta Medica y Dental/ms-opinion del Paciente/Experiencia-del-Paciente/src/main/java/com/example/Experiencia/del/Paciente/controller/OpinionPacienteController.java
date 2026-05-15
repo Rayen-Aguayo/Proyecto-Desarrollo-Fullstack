@@ -34,23 +34,23 @@ public class OpinionPacienteController {
     }
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<List<OpinionPacienteResponse>>> listar() {
+    public ResponseEntity<ApiResponse<List<OpinionPacienteResponse>>> listar(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(
             ApiResponse.<List<OpinionPacienteResponse>>builder()
                 .success(true)
                 .message("Listado de opiniones obtenido")
-                .data(opinionPacienteService.listar())
+                .data(opinionPacienteService.listar(token))
                 .build()
         );
     }
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<ApiResponse<OpinionPacienteResponse>> obtener(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<OpinionPacienteResponse>> obtener(@PathVariable Long id, @RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(
             ApiResponse.<OpinionPacienteResponse>builder()
                 .success(true)
                 .message("Detalle de la opinión obtenido")
-                .data(opinionPacienteService.obtener(id))
+                .data(opinionPacienteService.obtener(id,token))
                 .build()
         );
     }

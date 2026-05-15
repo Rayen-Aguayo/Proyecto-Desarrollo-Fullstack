@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OpinionPacienteResponse {
     private Long id;
-    private String runPaciente;
-    private String nombreMedico;
+    private PacienteResponse runPaciente;
+    private MedicoResponse nombreMedico;
     private Integer atencionMedico;
     private String expliqueSuPuntuacion;
     private String explicacionTratamiento;
