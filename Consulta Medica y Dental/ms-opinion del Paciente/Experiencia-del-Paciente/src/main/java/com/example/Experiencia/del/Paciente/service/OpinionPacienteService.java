@@ -1,112 +1,83 @@
 package com.example.Experiencia.del.Paciente.service;
 
 import org.springframework.stereotype.Service;
-
 import com.example.Experiencia.del.Paciente.client.MedicoClient;
 import com.example.Experiencia.del.Paciente.client.PacienteClient;
+import com.example.Experiencia.del.Paciente.dto.OpinionPacienteDTO;
+import com.example.Experiencia.del.Paciente.dto.OpinionPacienteResponse;
+import com.example.Experiencia.del.Paciente.model.OpinionPaciente;
 import com.example.Experiencia.del.Paciente.repository.OpinionPacienteRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class OpinionPacienteService {
+
     private final OpinionPacienteRepository opinionPacienteRepository;
     private final MedicoClient medicoClient;
     private final PacienteClient pacienteClient;
 
-    public OpINIResponse  crear(FacturacionYPresupuestoDTO dto, String token) {
-
-        log.info("Crear facturacion y presupuesto", keyValue("nombre del paciente", dto.getNombrePaciente()), keyValue("run del paciente", dto.getRunPaciente()), keyValue("nombre del medico", dto.getNombreMedico()), keyValue("run del medico", dto.getRunMedico()));
-
+    public OpinionPacienteResponse crear(OpinionPacienteDTO dto, String token) {
+        log.info("Registrando nueva opinión para el paciente: {}", dto.getRunPaciente());
         var paciente = pacienteClient.getPacienteClient(dto.getRunPaciente(), token);
-
         if (paciente == null) {
-            throw new RuntimeException("el paciente no existe no se puede crear la facturacion y el presupuesto");
+            throw new RuntimeException("El paciente no existe, no se puede registrar la opinión");
+        }
+        var medico = medicoClient.getMedicoClient(dto.getNombreMedico(),token);
+        if (medico == null) {
+            throw new RuntimeException("El médico no existe");
         }
 
-        var medico = medicoClient.getMedicoClient(dto.getRunMedico(), token);
-        if (medico == null) {
-                throw new RuntimeException("El médico no existe");
-}
+        OpinionPaciente opinionPaciente = OpinionPacienteRepository.save(
+                new OpinionPaciente(
+                        null,
+                        dto.getRunPaciente(),
+                        dto.getNombreMedico(),
+                        dto.getAtencionMedico(),
+                        dto.getExpliqueSuPuntuacion(),
+                        dto.getExplicacionTratamiento(),
+        return mapToResponse(opinionPaciente, token);
 
-        FacturacionYPresupuesto facypre = repository.save(
-                new FacturacionYPresupuesto(
-                    null, 
-                    dto.getPresupuesto(),
-                    dto.getNombrePaciente(),    
-                    dto.getRunPaciente(),
-                    dto.getNombreMedico(),
-                    dto.getRunMedico(),
-                    dto.getTratamiento(),
-                    dto.getDiasDuracion(),
-                    dto.getGestionPagos()
-                )
-        );
+        OpinionPaciente guardada = opinionPacienteRepository.save(opinionPaciente);
 
-        return mapToResponse(facypre, token);
+        return mapToResponse(guardada);
     }
 
-    public List<FacturacionYPresupuestoResponse> listar(String token) {
-
-        return repository.findAll()
+    public List<OpinionPacienteResponse> listar() {
+        return opinionPacienteRepository.findAll()
                 .stream()
-                .map(l -> mapToResponse(l, token))
+                .map(this::mapToResponse)
                 .toList();
     }
 
-    public FacturacionYPresupuestoResponse obtener(Long id, String token) {
-
-        FacturacionYPresupuesto facypre = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("FacturacionYPresupuesto no encontrado"));
-
-        return mapToResponse(facypre, token);
-    }
-
-    public FacturacionYPresupuestoResponse actualizar(Long id, FacturacionYPresupuestoDTO dto, String token) {
-
-        var paciente = pacienteClient.getPacienteClient(dto.getRunPaciente(), token);
-
-        if (paciente == null) {
-            throw new RuntimeException("El paciente no existe");
-        }
-
-        FacturacionYPresupuesto facypre = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("FacturacionYPresupuesto no encontrado"));
-
-        facypre.setPresupuesto(dto.getPresupuesto());
-        facypre.setNombrePaciente(dto.getNombrePaciente());
-        facypre.setRunPaciente(dto.getRunPaciente());
-        facypre.setNombreMedico(dto.getNombreMedico());
-        facypre.setRunMedico(dto.getRunMedico());
-        facypre.setTratamiento(dto.getTratamiento());
-        facypre.setDiasDuracion(dto.getDiasDuracion());
-        facypre.setGestionPagos(dto.getGestionPagos());
-
-        return mapToResponse(repository.save(facypre), token);
+    public OpinionPacienteResponse obtener(Long id) {
+        OpinionPaciente opinion = opinionPacienteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Opinión no encontrada"));
+        return mapToResponse(opinion);
     }
 
     public void eliminar(Long id) {
-        repository.deleteById(id);
+        if (!opinionPacienteRepository.existsById(id)) {
+            throw new EntityNotFoundException("No se puede eliminar, opinión no encontrada");
+        }
+        opinionPacienteRepository.deleteById(id);
     }
 
-    private FacturacionYPresupuestoResponse mapToResponse(FacturacionYPresupuesto facypre, String token) {
-
-        var paciente = pacienteClient.getPacienteClient(facypre.getRunPaciente(), token);
-        var medico = medicoClient.getMedicoClient(facypre.getRunMedico(), token);
-
-        return FacturacionYPresupuestoResponse.builder()
-                .id(facypre.getId())
-                .presupuesto(facypre.getPresupuesto())
-                .paciente(paciente)
-                .medico(medico)
-                .tratamiento(facypre.getTratamiento())
-                .diasDuracion(facypre.getDiasDuracion())
-                .gestionPagos(facypre.getGestionPagos())
+    // Método para convertir el Modelo a Response
+    private OpinionPacienteResponse mapToResponse(OpinionPaciente opinion) {
+        return OpinionPacienteResponse.builder()
+                .id(opinion.getId())
+                .runPaciente(opinion.getRunPaciente())
+                .nombreMedico(opinion.getNombreMedico())
+                .atencionMedico(opinion.getAtencionMedico())
+                .expliqueSuPuntuacion(opinion.getExpliqueSuPuntuacion())
+                .explicacionTratamiento(opinion.getExplicacionTratamiento())
+                .comentarioMejora(opinion.getComentarioMejora())
                 .build();
-
     }
 }

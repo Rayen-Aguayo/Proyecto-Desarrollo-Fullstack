@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OpinionResponse {
+public class OpinionPacienteResponse {
     private Long id;
     private String runPaciente;
     private String nombreMedico;
