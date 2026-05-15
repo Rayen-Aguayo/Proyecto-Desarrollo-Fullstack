@@ -21,8 +21,9 @@ public class OpinionPaciente {
     private String runPaciente;
     private String nombreMedico;
     private Integer atencionMedico;
+    private String expliqueSuPuntuacion;
     private String explicacionTratamiento;
-    private String comentario;
+    private String comentarioMejora;
     private Integer puntuacionMedico;
 }
 
