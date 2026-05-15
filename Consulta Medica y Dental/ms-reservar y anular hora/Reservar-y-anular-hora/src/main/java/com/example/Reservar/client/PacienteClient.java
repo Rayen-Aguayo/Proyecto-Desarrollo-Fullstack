@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class PacienteClient {
 
     private final WebClient webClient;
-    private final String BASE_URL = "http://localhost:8080/api/v1/pacientes/";
+    private final String BASE_URL = "http://localhost:8085/api/v1/pacientes/";
     
     public PacienteResponse getPacienteClient(String run, String token){
     

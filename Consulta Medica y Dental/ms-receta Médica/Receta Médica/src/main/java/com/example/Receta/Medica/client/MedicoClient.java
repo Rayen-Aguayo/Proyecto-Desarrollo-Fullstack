@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class MedicoClient {
     private final WebClient webClient;
 
-    private final String BASE_URL = "http://localhost:8080/api/v1/medicos";
+    private final String BASE_URL = "http://localhost:8082/api/v1/medicos";
 
     public MedicoResponse getMedicoClient(String id, String token) {
 
