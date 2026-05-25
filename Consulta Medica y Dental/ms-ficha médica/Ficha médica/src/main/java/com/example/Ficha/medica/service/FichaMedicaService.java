@@ -112,9 +112,8 @@ public class FichaMedicaService {
         var medico = medicoClient.getMedicoClient(fichaMedica.getNombreMedico(), token);
         return FichaMedicaResponse.builder()
                 .id(fichaMedica.getId())
-                .runPaciente(fichaMedica.getRunPaciente())
-                .nombrePaciente(paciente.getNombrePaciente())
-                .nombreMedico(medico.getNombreMedico())
+                .paciente(paciente)
+                .medico(medico)
                 .procedimiento(fichaMedica.getProcedimiento())
                 .queMedicamentoEstaTomando(paciente.getQueMedicamentoEstaTomando())
                 .enfermedad(paciente.getEnfermedad())

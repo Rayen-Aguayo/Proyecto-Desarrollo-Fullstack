@@ -12,9 +12,8 @@ import lombok.NoArgsConstructor;
 public class FichaMedicaResponse {
     private Long id;
 
-    private String runPaciente;
-    private String nombrePaciente;
-    private String nombreMedico;
+    private PacienteResponse paciente;
+    private MedicoResponse medico;
     private String procedimiento;
     private String queMedicamentoEstaTomando;
     private String enfermedad;

@@ -1,7 +1,6 @@
 package com.example.Ficha.medica.controller;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -9,26 +8,26 @@ import org.springframework.web.bind.annotation.*;
 import com.example.Ficha.medica.dto.ApiResponse;
 import com.example.Ficha.medica.dto.FichaMedicaDTO;
 import com.example.Ficha.medica.dto.FichaMedicaResponse;
-import com.example.Ficha.medica.model.FichaMedica;
 import com.example.Ficha.medica.service.FichaMedicaService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/fichas_medicas")
+@RequiredArgsConstructor
 public class FichaMedicaController {
-
-    @Autowired
-    private FichaMedicaService fichaMedicaService; // Quitamos el final para que el @Autowired funcione simple
-
+    private final FichaMedicaService fichaMedicaService;
+    
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<FichaMedica>> crear(@Valid @RequestBody FichaMedicaDTO dto,
+    public ResponseEntity<ApiResponse<FichaMedicaResponse>> crear(@Valid @RequestBody FichaMedicaDTO dto,
             @RequestHeader("Authorization") String token) {
+
         return ResponseEntity.status(201).body(
-                ApiResponse.<FichaMedica>builder()
+                ApiResponse.<FichaMedicaResponse>builder()
                         .success(true)
-                        .message("Ficha Medica creada")
+                        .message("Ficha médica creada")
                         .data(fichaMedicaService.crear(dto, token))
                         .build()
         );
@@ -36,12 +35,14 @@ public class FichaMedicaController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<List<FichaMedica>>> listar() {
+    public ResponseEntity<ApiResponse<List<FichaMedicaResponse>>> listar(
+            @RequestHeader("Authorization") String token) {
+
         return ResponseEntity.ok(
-                ApiResponse.<List<FichaMedica>>builder()
+                ApiResponse.<List<FichaMedicaResponse>>builder()
                         .success(true)
                         .message("Listado obtenido")
-                        .data(fichaMedicaService.listar())
+                        .data(fichaMedicaService.listar(token))
                         .build()
         );
     }
@@ -53,7 +54,7 @@ public class FichaMedicaController {
         return ResponseEntity.ok(
                 ApiResponse.<FichaMedicaResponse>builder()
                         .success(true)
-                        .data(fichaMedicaService.obtener(id, token)) // minúscula: fichaMedicaService
+                        .data(fichaMedicaService.obtener(id, token))
                         .build()
         );
     }
@@ -69,7 +70,7 @@ public class FichaMedicaController {
                 ApiResponse.<FichaMedicaResponse>builder()
                         .success(true)
                         .message("Se cambió la hora")
-                        .data(fichaMedicaService.actualizar(id, dto, token)) // minúscula: fichaMedicaService
+                        .data(fichaMedicaService.actualizar(id, dto, token))
                         .build()
         );
     }
@@ -77,7 +78,7 @@ public class FichaMedicaController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable Long id) {
-        fichaMedicaService.eliminar(id); // Corregido el nombre del servicio duplicado
+        fichaMedicaService.eliminar(id);
         return ResponseEntity.ok(
                 ApiResponse.<Void>builder()
                         .success(true)
