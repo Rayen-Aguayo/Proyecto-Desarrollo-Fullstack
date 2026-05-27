@@ -29,7 +29,7 @@ public class FichaMedicaService {
     public FichaMedicaResponse crear(FichaMedicaDTO dto, String token) {
 
         log.info("Creando ficha médica",
-                keyValue("paciente", dto.getNombrePaciente()));
+                keyValue("paciente", dto.getRunPaciente()));
         var paciente = pacienteClient.getPacienteClient(
                 dto.getRunPaciente(),
                 token);
@@ -38,7 +38,7 @@ public class FichaMedicaService {
             throw new RuntimeException("El paciente no existe");
         }
         var medico = medicoClient.getMedicoClient(
-                dto.getNombreMedico(),
+                dto.getRunMedico(),
                 token);
 
         if (medico == null) {
@@ -81,7 +81,7 @@ public class FichaMedicaService {
         if (paciente == null) {
             throw new RuntimeException("El paciente no existe");
         }
-        var medico = medicoClient.getMedicoClient(dto.getNombreMedico(),token);
+        var medico = medicoClient.getMedicoClient(dto.getRunMedico(),token);
         if (medico == null) {
             throw new RuntimeException("El médico no existe");
         }
@@ -90,6 +90,7 @@ public class FichaMedicaService {
                 .orElseThrow(() -> new EntityNotFoundException("Ficha médica no encontrada"));
         ficha.setRunPaciente(dto.getRunPaciente());
         ficha.setNombrePaciente(dto.getNombrePaciente());
+        ficha.setRunMedico(dto.getRunMedico());
         ficha.setNombreMedico(dto.getNombreMedico());
         ficha.setProcedimiento(dto.getProcedimiento());
         ficha.setQueMedicamentoEstaTomando(dto.getQueMedicamentoEstaTomando());
