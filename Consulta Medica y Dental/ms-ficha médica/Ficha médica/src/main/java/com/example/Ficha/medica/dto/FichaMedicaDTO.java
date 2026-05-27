@@ -15,6 +15,9 @@ public class FichaMedicaDTO {
     @NotBlank(message = "El Nombre del Paciente no puede esta vacio")
     private String nombrePaciente;
 
+    @NotBlank(message = "El run no puede estar vacio")
+    private String runMedico;
+
     @NotBlank(message = "El Nombre del Medico no puede estar vacio")
     private String nombreMedico;
 

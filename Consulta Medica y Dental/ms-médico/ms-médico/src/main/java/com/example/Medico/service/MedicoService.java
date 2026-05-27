@@ -26,7 +26,7 @@ public class MedicoService {
         log.info("Crear medico", keyValue("nombre", dto.getNombreMedico()));
 
 
-        Medico m = new Medico(dto.getRun(),dto.getNombreMedico(),dto.getEdad(), 
+        Medico m = new Medico(dto.getRunMedico(),dto.getNombreMedico(),dto.getEdad(), 
         dto.getNroTelefono(), dto.getEspecialidad(), dto.getFirmaMedico());
 
         return medicoRepository.save(m);
