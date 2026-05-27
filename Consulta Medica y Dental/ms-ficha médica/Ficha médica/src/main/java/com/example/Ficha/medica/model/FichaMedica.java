@@ -20,6 +20,7 @@ public class FichaMedica {
     private Long id;
     private String runPaciente;
     private String nombrePaciente;
+    private String runMedico;
     private String nombreMedico;
     private String procedimiento;
     private String queMedicamentoEstaTomando;

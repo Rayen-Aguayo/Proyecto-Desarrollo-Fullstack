@@ -50,6 +50,7 @@ public class FichaMedicaService {
                         null,
                         dto.getRunPaciente(),
                         dto.getNombrePaciente(),
+                        dto.getRunMedico(),
                         dto.getNombreMedico(),
                         dto.getProcedimiento(),
                         dto.getQueMedicamentoEstaTomando(),
@@ -109,7 +110,7 @@ public class FichaMedicaService {
 
     private FichaMedicaResponse mapToResponse(FichaMedica fichaMedica, String token) {
         var paciente = pacienteClient.getPacienteClient(fichaMedica.getRunPaciente(), token);
-        var medico = medicoClient.getMedicoClient(fichaMedica.getNombreMedico(), token);
+        var medico = medicoClient.getMedicoClient(fichaMedica.getRunMedico(), token);
         return FichaMedicaResponse.builder()
                 .id(fichaMedica.getId())
                 .paciente(paciente)
