@@ -93,7 +93,7 @@ public class MedicoController {
         return ResponseEntity.ok(
                 ApiResponse.<Void>builder()
                         .success(true)
-                        .message("Autor eliminado")
+                        .message("Medico eliminado")
                         .build()
         );
     }
