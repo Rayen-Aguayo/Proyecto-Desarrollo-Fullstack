@@ -26,6 +26,7 @@ public class PedirHora {
     
     private String runPaciente;
     private String nombrePaciente;
+    private String runMedico;
     private String nombreMedico;
     private LocalDate fecha;
     private LocalTime horaDeAtencion;  
