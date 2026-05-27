@@ -19,6 +19,7 @@ public class OpinionPaciente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String runPaciente;
+    private String runMedico;
     private String nombreMedico;
     private Integer atencionMedico;
     private String expliqueSuPuntuacion;

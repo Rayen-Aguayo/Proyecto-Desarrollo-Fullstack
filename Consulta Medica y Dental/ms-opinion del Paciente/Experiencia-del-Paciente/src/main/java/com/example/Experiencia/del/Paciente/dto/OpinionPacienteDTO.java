@@ -9,8 +9,10 @@ import lombok.Data;
 @Data
 
 public class OpinionPacienteDTO {
-    @NotBlank(message = "El RUN del paciente es obligatorio")
+    @NotBlank(message = "El run del paciente es obligatorio")
     private String runPaciente;
+    @NotBlank(message = "El run del medico es obligatorio")
+    private String runMedico;
     @NotBlank(message = "El nombre del médico es obligatorio")
     private String nombreMedico;
     @NotNull(message = "La puntuación de atención es obligatoria")

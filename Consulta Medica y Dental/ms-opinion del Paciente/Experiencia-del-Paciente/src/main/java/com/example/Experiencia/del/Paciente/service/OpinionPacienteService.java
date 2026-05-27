@@ -32,7 +32,7 @@ public class OpinionPacienteService {
             throw new RuntimeException("El paciente no existe, no se puede registrar la opinión");
         }
 
-        var medico = medicoClient.getMedicoClient(dto.getNombreMedico(),token);
+        var medico = medicoClient.getMedicoClient(dto.getRunMedico(),token);
 
         if (medico == null) {
             throw new RuntimeException("El médico no existe");
@@ -42,6 +42,7 @@ public class OpinionPacienteService {
                 new OpinionPaciente(
                         null,
                         dto.getRunPaciente(),
+                        dto.getRunMedico(),
                         dto.getNombreMedico(),
                         dto.getAtencionMedico(),
                         dto.getExpliqueSuPuntuacion(),
@@ -77,11 +78,11 @@ public class OpinionPacienteService {
     // Método para convertir el Modelo a Response
     private OpinionPacienteResponse mapToResponse(OpinionPaciente opinion, String token) {
         var paciente = pacienteClient.getPacienteClient(opinion.getRunPaciente(), token);
-        var medico = medicoClient.getMedicoClient(opinion.getNombreMedico(), token);
+        var medico = medicoClient.getMedicoClient(opinion.getRunMedico(), token);
         return OpinionPacienteResponse.builder()
                 .id(opinion.getId())
-                .runPaciente(paciente)
-                .nombreMedico(medico)
+                .paciente(paciente)
+                .medico(medico)
                 .atencionMedico(opinion.getAtencionMedico())
                 .expliqueSuPuntuacion(opinion.getExpliqueSuPuntuacion())
                 .explicacionTratamiento(opinion.getExplicacionTratamiento())
