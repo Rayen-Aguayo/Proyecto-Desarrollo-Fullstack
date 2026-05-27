@@ -2,7 +2,6 @@ package com.example.Medico.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,9 +27,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("api/v1/medicos")
 @RequiredArgsConstructor
 public class MedicoController {
-
-    @Autowired
-    private MedicoService medicoService;
+    private final MedicoService medicoService;
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
