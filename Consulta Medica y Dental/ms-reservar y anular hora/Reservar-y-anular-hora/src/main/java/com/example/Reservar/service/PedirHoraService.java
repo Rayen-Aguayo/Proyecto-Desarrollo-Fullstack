@@ -29,16 +29,14 @@ public class PedirHoraService {
     public PedirHoraResponse  crear(PedirHoraDTO dto, String token) {
 
         log.info("reservar hora", keyValue("run del paciente", dto.getRunPaciente()));
-
         var paciente = pacienteClient.getPacienteClient(dto.getRunPaciente(), token);
-
         if (paciente == null) {
             throw new RuntimeException("el paciente no existe no se le puede reservar una hora");
         }
         var medico = medicoClient.getMedicoClient(dto.getRunMedico(), token);
         if (medico == null) {
                 throw new RuntimeException("El médico no existe");
-}
+        }
 
         PedirHora pedirHora = pedirHoraRepository.save(
                new PedirHora(
@@ -79,7 +77,7 @@ public class PedirHoraService {
         if (paciente == null) {
             throw new RuntimeException("el paciente no existe");
         }
-        var medico = medicoClient.getMedicoClient(dto.getNombreMedico(), token);
+        var medico = medicoClient.getMedicoClient(dto.getRunMedico(), token);
 
         if (medico == null) {
         throw new RuntimeException("El médico no existe");
@@ -90,6 +88,7 @@ public class PedirHoraService {
 
         p.setRunPaciente(dto.getRunPaciente());
         p.setNombrePaciente(dto.getNombrePaciente());
+        p.setRunMedico(dto.getRunMedico());
         p.setNombreMedico(dto.getNombreMedico());
         p.setFecha(dto.getFecha());
         p.setHoraDeAtencion(dto.getHoraDeAtencion());
