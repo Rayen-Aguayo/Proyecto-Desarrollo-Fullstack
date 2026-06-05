@@ -17,8 +17,7 @@ public class PagosResponse {
 
     private Long id;
     
-    private PacienteResponse runPaciente;  
-    private PacienteResponse nombrePaciente;
+    private PacienteResponse paciente;  
     private LocalDate fecha;
     private LocalTime hora;
     private String metodoPago;

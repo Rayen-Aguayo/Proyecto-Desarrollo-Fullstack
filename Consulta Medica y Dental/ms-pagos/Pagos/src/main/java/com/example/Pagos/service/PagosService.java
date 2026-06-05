@@ -83,16 +83,12 @@ public class PagosService {
     }
 
 
-
     private PagosResponse mapToResponse(Pagos pagos, String token) {
 
-        var pacienteRun = pacienteClient.getPacienteClient(pagos.getRunPaciente(), token);
-        var pacienteNom = pacienteClient.getPacienteClient(pagos.getNombrePaciente(), token);
-
+        var paciente = pacienteClient.getPacienteClient(pagos.getRunPaciente(), token);
         return PagosResponse.builder()
                 .id(pagos.getId())
-                .runPaciente(pacienteRun)
-                .nombrePaciente(pacienteNom)
+                .paciente(paciente)
                 .fecha(pagos.getFecha())
                 .hora(pagos.getHora())
                 .metodoPago(pagos.getMetodoPago())
