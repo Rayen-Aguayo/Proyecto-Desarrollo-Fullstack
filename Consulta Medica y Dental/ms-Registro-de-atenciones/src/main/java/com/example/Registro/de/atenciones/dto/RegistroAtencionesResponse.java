@@ -13,13 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class RegistroAtencionesResponse {
-
     private Long id;
-
     private PacienteResponse paciente; 
-   
     private MedicoResponse medico;
-
     private PagosResponse pago;
     private LocalDate fecha;
     private LocalTime hora;

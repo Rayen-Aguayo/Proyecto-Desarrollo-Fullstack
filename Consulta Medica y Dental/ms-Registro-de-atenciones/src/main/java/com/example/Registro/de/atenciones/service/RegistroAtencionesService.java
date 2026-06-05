@@ -37,12 +37,12 @@ public class RegistroAtencionesService {
         log.info("Crear registro de atenciones", keyValue("paciente run", dto.getRunpaciente()));
 
         
-        var paciente = pacienteClient.getPacienteClient(dto.getNompaciente(), token);
+        var paciente = pacienteClient.getPacienteClient(dto.getRunpaciente(), token);
 
         if (paciente == null) {
             throw new RuntimeException("el paciente no existe");
         }
-        var medico = medicoClient.getMedicoClient(dto.getNommedico(), token);
+        var medico = medicoClient.getMedicoClient(dto.getRunmedico(), token);
         if (medico == null) {
                 throw new RuntimeException("El médico no existe");
 }
@@ -88,12 +88,12 @@ public class RegistroAtencionesService {
 
     public RegistroAtencionesResponse actualizar(Long id, RegistroAtencionesDTO dto, String token) {
 
-         var paciente = pacienteClient.getPacienteClient(dto.getNompaciente(), token);
+         var paciente = pacienteClient.getPacienteClient(dto.getRunpaciente(), token);
 
         if (paciente == null) {
             throw new RuntimeException("el paciente no existe");
         }
-        var medico = medicoClient.getMedicoClient(dto.getNommedico(), token);
+        var medico = medicoClient.getMedicoClient(dto.getRunmedico(), token);
         if (medico == null) {
                 throw new RuntimeException("El médico no existe");
 }
