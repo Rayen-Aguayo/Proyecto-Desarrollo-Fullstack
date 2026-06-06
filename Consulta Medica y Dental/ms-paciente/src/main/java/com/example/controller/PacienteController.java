@@ -22,13 +22,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name = "Pacientes", description = "Operaciones relacionadas con pacientes")
 
 @RestController
 @RequestMapping("/api/v1/pacientes")
 @RequiredArgsConstructor
 public class PacienteController {
     private final PacienteService pacienteService;
+
+    @Operation(
+        summary = "Creacion de pacientes",
+        description = "Permite crear un nuevo paciente. Solo accesible para usuarios con rol ADMIN."
+)
+@ApiResponses(value = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Paciente creado exitosamente"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autenticado o token inválido"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Acceso denegado")
+})
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
