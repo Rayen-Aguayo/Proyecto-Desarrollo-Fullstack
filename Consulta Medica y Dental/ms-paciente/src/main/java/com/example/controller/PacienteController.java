@@ -52,6 +52,26 @@ public class PacienteController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Paciente>> crear(@Valid @RequestBody PacienteDTO dto) {
         Paciente paciente = pacienteService.crear(dto);
+
+
+        EntityModel<Paciente> recurso = EntityModel.of(paciente2);
+
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).obtener(run))
+                        .withSelfRel());
+
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).listar())
+                        .withRel("all"));
+
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).actualizar(run, null))
+                        .withRel("update"));
+
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).eliminar(run))
+                        .withRel("delete"));
+
         return ResponseEntity.status(201).body(
                 ApiResponse.<Paciente>builder()
                         .success(true)
@@ -115,10 +135,15 @@ public class PacienteController {
         recurso.add(
                 linkTo(methodOn(PacienteController.class).actualizar(run, null))
                         .withRel("update"));
-
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).crear(null))
+                        .withRel("create"));
+        
         recurso.add(
                 linkTo(methodOn(PacienteController.class).eliminar(run))
                         .withRel("delete"));
+                                recurso.add();
+
 
         return ResponseEntity.ok(
                 ApiResponse.<EntityModel<Paciente>>builder()
@@ -176,6 +201,25 @@ public class PacienteController {
         @PathVariable String run) {
 
         pacienteService.eliminar(run);
+                Paciente paciente = pacienteService.obtener(run);
+
+        EntityModel<Paciente> recurso = EntityModel.of(paciente);
+
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).obtener(run))
+                        .withSelfRel());
+
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).listar())
+                        .withRel("all"));
+
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).actualizar(run, null))
+                        .withRel("update"));
+
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).crear(null))
+                        .withRel("create"));
 
         return ResponseEntity.ok(
                 ApiResponse.<Void>builder()
