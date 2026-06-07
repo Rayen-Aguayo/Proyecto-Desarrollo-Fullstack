@@ -27,6 +27,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 @Tag(name = "Pacientes", description = "Operaciones relacionadas con pacientes")
 
 @RestController
@@ -91,19 +94,42 @@ public class PacienteController {
     })
 
     @GetMapping("/{run}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Paciente>> obtener(
-        @Parameter(description = "run del paciente", example = "11111111-1")
-        @PathVariable String run) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<EntityModel<Paciente>>> obtener(
+
+            @Parameter(description = "RUN del paciente", example = "11111111-1")
+            @PathVariable String run) {
+
+        Paciente paciente = pacienteService.obtener(run);
+
+        EntityModel<Paciente> recurso = EntityModel.of(paciente);
+
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).obtener(run))
+                        .withSelfRel());
+
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).listar())
+                        .withRel("all"));
+
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).actualizar(run, null))
+                        .withRel("update"));
+
+        recurso.add(
+                linkTo(methodOn(PacienteController.class).eliminar(run))
+                        .withRel("delete"));
 
         return ResponseEntity.ok(
-                ApiResponse.<Paciente>builder()
+                ApiResponse.<EntityModel<Paciente>>builder()
                         .success(true)
-                        .message("paciente obtenido")
-                        .data(pacienteService.obtener(run))
+                        .message("Paciente obtenido")
+                        .data(recurso)
                         .build()
         );
     }
+
+    
     @Operation(
             summary = "Actualizar paciente",
             description = "Actualiza la información de un paciente existente. Requiere rol ADMIN."
