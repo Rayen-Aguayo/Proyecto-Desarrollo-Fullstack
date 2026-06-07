@@ -14,17 +14,17 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-            // ❌ CSRF off (API REST)
             .csrf(csrf -> csrf.disable())
-
-            // 🔐 SIN sesiones (clave para JWT)
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
-
-            // 🔓 Endpoints públicos
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers(
+                            "/auth/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html",
+                            "/v3/api-docs/**"
+                    ).permitAll()
                     .anyRequest().authenticated()
             );
 
