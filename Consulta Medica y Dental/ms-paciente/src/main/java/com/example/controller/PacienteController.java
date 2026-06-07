@@ -38,19 +38,17 @@ public class PacienteController {
     @Operation(
         summary = "Creacion de pacientes",
         description = "Permite crear un nuevo paciente. Solo accesible para usuarios con rol ADMIN."
-)
-@ApiResponses(value = {
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Paciente creado exitosamente"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autenticado o token inválido"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Acceso denegado")
-})
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Paciente creado exitosamente"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autenticado o token inválido"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Acceso denegado")
+    })
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Paciente>> crear(@Valid @RequestBody PacienteDTO dto) {
-
         Paciente paciente = pacienteService.crear(dto);
-
         return ResponseEntity.status(201).body(
                 ApiResponse.<Paciente>builder()
                         .success(true)
@@ -59,6 +57,15 @@ public class PacienteController {
                         .build()
         );
     }
+    @Operation(
+            summary = "Listar pacientes",
+            description = "Obtiene una lista de todos los pacientes. Requiere rol ADMIN."
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Lista de pacientes obtenida"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autenticado o token inválido"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Acceso denegado")
+    })
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -72,27 +79,52 @@ public class PacienteController {
                         .build()
         );
     }
+    @Operation(
+        summary = "Obtener paciente por su run",
+        description = "Busca un paciente usando su identificador (run). Requiere rol ADMIN."
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Paciente obtenido"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Paciente no encontrado"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autenticado o token inválido"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Acceso denegado")
+    })
 
-    @GetMapping("/{id}")
+    @GetMapping("/{run}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Paciente>> obtener(@PathVariable String id) {
+    public ResponseEntity<ApiResponse<Paciente>> obtener(
+        @Parameter(description = "run del paciente", example = "11111111-1")
+        @PathVariable String run) {
 
         return ResponseEntity.ok(
                 ApiResponse.<Paciente>builder()
                         .success(true)
                         .message("paciente obtenido")
-                        .data(pacienteService.obtener(id))
+                        .data(pacienteService.obtener(run))
                         .build()
         );
     }
+    @Operation(
+            summary = "Actualizar paciente",
+            description = "Actualiza la información de un paciente existente. Requiere rol ADMIN."
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Paciente actualizado"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Paciente no encontrado"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autenticado o token inválido"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Acceso denegado")
+    })
 
-    @PutMapping("/{id}")
+    @PutMapping("/{run}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Paciente>> actualizar(@PathVariable String id,
-                                                        @Valid @RequestBody PacienteDTO dto) {
+    public ResponseEntity<ApiResponse<Paciente>> actualizar(
 
-        Paciente paciente = pacienteService.actualizar(id, dto);
+        @Parameter(description = "RUN del paciente", example = "11111111-1")
+        @PathVariable String run,
 
+        @Valid @RequestBody PacienteDTO dto) {
+
+    Paciente paciente = pacienteService.actualizar(run, dto);
         return ResponseEntity.ok(
                 ApiResponse.<Paciente>builder()
                         .success(true)
@@ -101,12 +133,23 @@ public class PacienteController {
                         .build()
         );
     }
-
-    @DeleteMapping("/{id}")
+    @Operation(
+        summary = "Eliminar paciente por su run",
+        description = "Busca un paciente usando su identificador (run) y lo elimina. Requiere rol ADMIN."
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Paciente eliminado"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Paciente no encontrado"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autenticado o token inválido"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Acceso denegado")
+    })
+    @DeleteMapping("/{run}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable String id) {
+    public ResponseEntity<ApiResponse<Void>> eliminar(
+        @Parameter(description = "run del paciente", example = "11111111-1")
+        @PathVariable String run) {
 
-        pacienteService.eliminar(id);
+        pacienteService.eliminar(run);
 
         return ResponseEntity.ok(
                 ApiResponse.<Void>builder()
