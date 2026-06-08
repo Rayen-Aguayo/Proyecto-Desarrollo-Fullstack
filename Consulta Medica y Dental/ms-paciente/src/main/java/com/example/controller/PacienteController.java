@@ -53,24 +53,13 @@ public class PacienteController {
     public ResponseEntity<ApiResponse<Paciente>> crear(@Valid @RequestBody PacienteDTO dto) {
         Paciente paciente = pacienteService.crear(dto);
 
+        EntityModel<Paciente> recurso = EntityModel.of(paciente);
 
-        EntityModel<Paciente> recurso = EntityModel.of(paciente2);
-
-        recurso.add(
-                linkTo(methodOn(PacienteController.class).obtener(run))
-                        .withSelfRel());
 
         recurso.add(
                 linkTo(methodOn(PacienteController.class).listar())
                         .withRel("all"));
-
-        recurso.add(
-                linkTo(methodOn(PacienteController.class).actualizar(run, null))
-                        .withRel("update"));
-
-        recurso.add(
-                linkTo(methodOn(PacienteController.class).eliminar(run))
-                        .withRel("delete"));
+        
 
         return ResponseEntity.status(201).body(
                 ApiResponse.<Paciente>builder()
