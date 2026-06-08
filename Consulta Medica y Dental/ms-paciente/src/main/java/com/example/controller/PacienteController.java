@@ -145,7 +145,7 @@ public class PacienteController {
 
     
     @Operation(
-            summary = "Actualizar paciente",
+            summary = "Actualizar paciente por su run",
             description = "Actualiza la información de un paciente existente. Requiere rol ADMIN."
     )
     @ApiResponses(value = {
